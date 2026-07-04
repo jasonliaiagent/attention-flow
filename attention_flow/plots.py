@@ -82,6 +82,31 @@ def plot_theme_decay(
     plt.close(fig)
 
 
+def plot_proxy_replication(
+    profiles: dict[str, dict[int, np.ndarray]],
+    out: Path,
+    title: str = "Attention co-movement vs graph distance, by proxy (AI theme)",
+) -> None:
+    """Decay curves for the same graph under different attention proxies."""
+    colors = {"Wikipedia pageviews": "#d95f02", "GDELT news volume": "#1b9e77"}
+    fig, ax = plt.subplots(figsize=(7.5, 4.5))
+    for label, by_d in profiles.items():
+        dists = sorted(by_d)
+        means = [by_d[d].mean() for d in dists]
+        sems = [by_d[d].std() / np.sqrt(len(by_d[d])) for d in dists]
+        ax.errorbar(
+            dists, means, yerr=sems, marker="o", lw=2, capsize=4,
+            label=label, color=colors.get(label, "#666"),
+        )
+    ax.set_xlabel("graph distance between entities (hops)")
+    ax.set_ylabel("mean peak lagged attention correlation")
+    ax.set_title(title)
+    ax.legend()
+    fig.tight_layout()
+    fig.savefig(out, dpi=150)
+    plt.close(fig)
+
+
 def plot_top_edges(results: list[EdgeResult], out: Path, top_n: int = 20) -> None:
     top = sorted(results, key=lambda r: r.peak_corr, reverse=True)[:top_n]
     labels = [f"{r.src} → {r.dst}" for r in top][::-1]

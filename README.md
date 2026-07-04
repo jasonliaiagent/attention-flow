@@ -77,20 +77,38 @@ Pooled across all 939 pairs from the four graphs, the decay is unambiguous:
 
 **And one honest negative.** The direction test — restricted to the 57 edges with peak lag ≥ 1 day, where forward and reverse correlations actually differ — came out flat: 28/57 forward, binomial p = 0.60. At this resolution attention *co-moves along economic edges* but does not detectably favor our hypothesized upstream→downstream orientation. Cross-correlation may simply be too blunt for direction (it isn't causal); Phase 2's tools (transfer entropy, event-based identification) inherit this as their first open question. GLP-1's flat decay is the other miss worth reporting: a 15-node graph over a narrative that is mostly *one* entity's rise may not have enough independent nodes for the test to bite.
 
+## Phase 1b — direction, and a replication that failed in an interesting way
+
+Two follow-ups to Phase 1's open questions, with verdicts that reshape the project:
+
+**A. Direction is absent — now a two-method finding.** Cross-correlation's flat direction test could be blamed on the tool (it's nearly symmetric by construction). Transfer entropy can't be: it asks whether the upstream entity's past reduces uncertainty about the downstream entity's future beyond its own history. Result, across all 87 edges: net-TE positive on 47/87 daily (sign p = 0.26) and 35/87 weekly (p = 0.97). Attention **co-moves along economic edges but does not detectably flow downstream** at daily-to-weekly resolution. Phase 2's model should therefore treat attention as *diffusing* on the graph, not as a directed cascade — a design decision made by the data.
+
+**B. The decay does not replicate in news volume — it reverses.** Rerunning the AI-theme distance test with GDELT global news volume (the share of world news coverage matching each entity, a proxy produced by journalists rather than readers):
+
+![proxy comparison](results/phase1b_replication.png)
+
+News-volume co-movement *rises* with graph distance (0.15 at 1 hop → 0.30 at 5 hops; decay stat −0.084, permutation p = 0.32). Two candidate explanations, which this design can't separate:
+
+1. **Measurement.** Distant node pairs are disproportionately generic terms (copper, uranium, natural gas, power grid) whose keyword news volume tracks the world-news cycle — wars, tariffs, energy crises — not entity-specific attention. Entity-level extraction (GDELT GKG) rather than keyword volume is the obvious upgrade.
+2. **Substantive.** Journalist coverage may genuinely organize by macro narrative while *reader curiosity* follows micro economic links. If real, the distance-decay result is a property of **demand-side attention** — what people look up, not what media publishes — which is arguably the side closer to investor behavior anyway.
+
+Either way: the Phase 1 result stands for Wikipedia pageviews and is now precisely scoped rather than overclaimed.
+
 ## Run it yourself
 
 ```bash
 python -m venv .venv && .venv/bin/pip install -r requirements.txt
 .venv/bin/python scripts/run_phase0.py   # the original falsification test
 .venv/bin/python scripts/run_phase1.py   # four themes + permutation null
+.venv/bin/python scripts/run_phase1b.py  # transfer-entropy direction + GDELT
 ```
 
 No API keys, ~10 minutes on first run (Wikimedia pageviews are free; responses are cached in `data/raw/`, and this repo ships the cache so reruns are instant). Outputs land in `results/`.
 
 ## Honest limitations
 
-- **One proxy.** Wikipedia pageviews only. GDELT news mentions and Google Trends are the natural replications.
-- **Correlation, not causation — and no direction yet.** The decay survives a degree-preserving permutation null, but the forward/reverse test is flat; nothing here identifies *causal* propagation.
+- **The decay is a demand-side result.** It holds in Wikipedia pageviews and does NOT replicate in keyword news volume (see Phase 1b). Google Trends and GDELT entity-level (GKG) counts are the remaining replications.
+- **Correlation, not causation — and no direction.** The decay survives a degree-preserving permutation null, but both cross-correlation and transfer entropy find no downstream orientation; nothing here identifies *causal* propagation.
 - **Hand-drawn edges.** The graphs encode my priors. The eventual system learns its edges from data (supply-chain filings, co-mentions, patents).
 - **Attention ≠ alpha.** Whether any of this survives transaction costs against efficient prices is a Phase 3 question, deliberately deferred.
 
@@ -98,8 +116,8 @@ No API keys, ~10 minutes on first run (Wikimedia pageviews are free; responses a
 
 - [x] **Phase 0 — falsification test**: does attention decay with graph distance? *(yes, weakly — worth continuing)*
 - [x] **Phase 1 — scale the evidence**: three more themes across two eras + degree-preserving permutation null. *(Decay confirmed: pooled p = 0.0008, Fisher p = 0.00015. Direction: still unresolved.)*
-- [ ] **Phase 1b — direction & proxies**: transfer entropy / event-based tests for direction; GDELT + Google Trends as independent attention proxies.
-- [ ] **Phase 2 — model it**: temporal GNN over the entity graph predicting next-week attention shocks; Hawkes processes for burst timing; contrastive embeddings of "attention episodes" (does robots→GPU→power rhyme with ChatGPT→GPU→power?).
+- [x] **Phase 1b — direction & proxies**: transfer entropy + GDELT news volume. *(Direction: absent, two methods agree. GDELT: decay reverses — the result is demand-side. Both reported in full above.)*
+- [ ] **Phase 2 — model it**: temporal GNN over the entity graph predicting next-week attention shocks as graph *diffusion* (per Phase 1b, not a directed cascade); Hawkes processes for burst timing; contrastive embeddings of "attention episodes" (does robots→GPU→power rhyme with ChatGPT→GPU→power?). GDELT GKG entity counts as a cleaner news proxy.
 - [ ] **Phase 3 — the capital-flow link**: do graph-predicted attention shocks lead returns/volume beyond momentum baselines (Cohen & Frazzini's *Economic Links and Predictable Returns* is the benchmark to beat)?
 
 ## Why this design

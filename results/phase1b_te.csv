@@ -1,0 +1,175 @@
+src,dst,relation,net_te,theme,freq
+ChatGPT,OpenAI,product-of,0.0033559591604618464,ai-buildout,daily
+ChatGPT,Nvidia,compute-demand,0.001385728245944953,ai-buildout,daily
+OpenAI,Nvidia,compute-demand,-0.0019403592415486951,ai-buildout,daily
+Anthropic,Nvidia,compute-demand,-0.0009161773184595736,ai-buildout,daily
+AI,Nvidia,compute-demand,0.010842409978602627,ai-buildout,daily
+AI,AMD,compute-demand,-0.0035956404267758844,ai-buildout,daily
+Humanoid robot,Nvidia,compute-demand,0.000953649628892001,ai-buildout,daily
+Tesla,Humanoid robot,builds,0.002458690563744037,ai-buildout,daily
+Nvidia,TSMC,foundry,0.0022919445585634877,ai-buildout,daily
+AMD,TSMC,foundry,-0.0001576180298791842,ai-buildout,daily
+TSMC,ASML,equipment,-0.0014814163819286113,ai-buildout,daily
+Samsung,ASML,equipment,-0.001289935926183863,ai-buildout,daily
+Nvidia,HBM,component,0.0010916955029706271,ai-buildout,daily
+HBM,SK Hynix,supplier,-0.002866558318400424,ai-buildout,daily
+HBM,Micron,supplier,-0.004130246468417215,ai-buildout,daily
+HBM,Samsung,supplier,0.000398033036345162,ai-buildout,daily
+OpenAI,Azure,hosted-on,-0.013796843188910715,ai-buildout,daily
+ChatGPT,Azure,hosted-on,0.0028327147830540366,ai-buildout,daily
+Nvidia,Data center,deployed-in,0.002534161577040864,ai-buildout,daily
+AI,Data center,deployed-in,0.005319461876093704,ai-buildout,daily
+Data center,CoreWeave,operator,0.008707137131229175,ai-buildout,daily
+Data center,Oracle,operator,0.001444314599127661,ai-buildout,daily
+Data center,AWS,operator,-0.006659250386708201,ai-buildout,daily
+Data center,Google Cloud,operator,-0.0025559189970676428,ai-buildout,daily
+Data center,Vertiv,cooling-power-equipment,-0.0032757616872360626,ai-buildout,daily
+Data center,Nuclear power,power-demand,-0.003506187145757042,ai-buildout,daily
+Data center,Natural gas,power-demand,-0.005321675362364166,ai-buildout,daily
+Data center,Constellation,power-purchase,-0.00370227428594735,ai-buildout,daily
+Data center,NextEra,power-purchase,0.0015863270959393435,ai-buildout,daily
+Data center,Vistra,power-purchase,-0.0013443219748507703,ai-buildout,daily
+Data center,GE Vernova,turbines,-0.0014657126529862858,ai-buildout,daily
+Nuclear power,SMR,technology,0.0017788453871618072,ai-buildout,daily
+Nuclear power,Constellation,operator,0.0023090592295725992,ai-buildout,daily
+Nuclear power,Uranium,fuel,-0.0004138577955017479,ai-buildout,daily
+Data center,Electrical grid,load-growth,-0.004236708293547498,ai-buildout,daily
+Electrical grid,Transformer (device),equipment,-0.002068650476350433,ai-buildout,daily
+Electrical grid,Quanta Services,construction,0.0009558186457206694,ai-buildout,daily
+Electrical grid,Eaton,equipment,0.004231336468154085,ai-buildout,daily
+Electrical grid,Copper,material,0.001739530061842293,ai-buildout,daily
+ChatGPT,OpenAI,product-of,-0.0602733928055472,ai-buildout,weekly
+ChatGPT,Nvidia,compute-demand,0.026173957927429548,ai-buildout,weekly
+OpenAI,Nvidia,compute-demand,-0.03278041781608299,ai-buildout,weekly
+Anthropic,Nvidia,compute-demand,-0.03140715855564169,ai-buildout,weekly
+AI,Nvidia,compute-demand,-0.0018950005645717374,ai-buildout,weekly
+AI,AMD,compute-demand,-0.02252873404335795,ai-buildout,weekly
+Humanoid robot,Nvidia,compute-demand,-0.021846457162746954,ai-buildout,weekly
+Tesla,Humanoid robot,builds,-0.03515079340191111,ai-buildout,weekly
+Nvidia,TSMC,foundry,-0.038275062990734285,ai-buildout,weekly
+AMD,TSMC,foundry,-0.015673925599966693,ai-buildout,weekly
+TSMC,ASML,equipment,-0.009250099286103416,ai-buildout,weekly
+Samsung,ASML,equipment,0.010161035789241782,ai-buildout,weekly
+Nvidia,HBM,component,-0.060487755752759595,ai-buildout,weekly
+HBM,SK Hynix,supplier,-0.020096318292372864,ai-buildout,weekly
+HBM,Micron,supplier,0.014242222189304217,ai-buildout,weekly
+HBM,Samsung,supplier,-0.003326246161353668,ai-buildout,weekly
+OpenAI,Azure,hosted-on,0.007634937063560179,ai-buildout,weekly
+ChatGPT,Azure,hosted-on,0.04355106253028329,ai-buildout,weekly
+Nvidia,Data center,deployed-in,0.0031227128437182755,ai-buildout,weekly
+AI,Data center,deployed-in,-0.012207003242715973,ai-buildout,weekly
+Data center,CoreWeave,operator,0.02676694297086238,ai-buildout,weekly
+Data center,Oracle,operator,0.005237995369637954,ai-buildout,weekly
+Data center,AWS,operator,0.022453150607875415,ai-buildout,weekly
+Data center,Google Cloud,operator,0.030120337417738688,ai-buildout,weekly
+Data center,Vertiv,cooling-power-equipment,-0.02107089124594126,ai-buildout,weekly
+Data center,Nuclear power,power-demand,-0.008774814856833086,ai-buildout,weekly
+Data center,Natural gas,power-demand,0.006859344259316752,ai-buildout,weekly
+Data center,Constellation,power-purchase,-0.014453524060541248,ai-buildout,weekly
+Data center,NextEra,power-purchase,-0.020291605907406536,ai-buildout,weekly
+Data center,Vistra,power-purchase,-0.006498594988901679,ai-buildout,weekly
+Data center,GE Vernova,turbines,-0.0023326391630515836,ai-buildout,weekly
+Nuclear power,SMR,technology,-0.03649168445809605,ai-buildout,weekly
+Nuclear power,Constellation,operator,-0.02968326885443897,ai-buildout,weekly
+Nuclear power,Uranium,fuel,-0.006575455248065264,ai-buildout,weekly
+Data center,Electrical grid,load-growth,-0.005794397293633451,ai-buildout,weekly
+Electrical grid,Transformer (device),equipment,0.027033096971136136,ai-buildout,weekly
+Electrical grid,Quanta Services,construction,0.00554330072106465,ai-buildout,weekly
+Electrical grid,Eaton,equipment,0.032001142135113826,ai-buildout,weekly
+Electrical grid,Copper,material,0.058792155284021666,ai-buildout,weekly
+Semaglutide,Novo Nordisk,maker,0.0027600957885819885,glp1,daily
+Tirzepatide,Eli Lilly,maker,0.0003409127668229338,glp1,daily
+Semaglutide,GLP-1,drug-class,0.006820388847144943,glp1,daily
+Tirzepatide,GLP-1,drug-class,0.006005161600839047,glp1,daily
+Semaglutide,Weight loss,indication,-0.0022761607586511134,glp1,daily
+Semaglutide,Obesity,indication,0.0015214585936780848,glp1,daily
+GLP-1,Bariatric surgery,substitute,0.0015815273921804323,glp1,daily
+GLP-1,WeightWatchers,disruption,0.0018627340446298827,glp1,daily
+GLP-1,PepsiCo,demand-risk,0.0002236594460186701,glp1,daily
+GLP-1,Mondelez,demand-risk,0.0031299869015354986,glp1,daily
+GLP-1,DaVita,demand-risk,-4.6475016933927166e-05,glp1,daily
+Novo Nordisk,Catalent,manufacturing,-0.002071661044605767,glp1,daily
+Semaglutide,Compounding,shortage,-0.0009420841866193234,glp1,daily
+Compounding,Hims & Hers,seller,0.0010197298873185004,glp1,daily
+Semaglutide,Novo Nordisk,maker,-0.007702182228363816,glp1,weekly
+Tirzepatide,Eli Lilly,maker,0.017354416967444636,glp1,weekly
+Semaglutide,GLP-1,drug-class,0.0029153422066239484,glp1,weekly
+Tirzepatide,GLP-1,drug-class,0.06253122209851376,glp1,weekly
+Semaglutide,Weight loss,indication,-0.00140099944216341,glp1,weekly
+Semaglutide,Obesity,indication,0.002419450126641954,glp1,weekly
+GLP-1,Bariatric surgery,substitute,0.02042353512519547,glp1,weekly
+GLP-1,WeightWatchers,disruption,-0.044865785821252196,glp1,weekly
+GLP-1,PepsiCo,demand-risk,-0.005581206961845171,glp1,weekly
+GLP-1,Mondelez,demand-risk,0.002318301860243649,glp1,weekly
+GLP-1,DaVita,demand-risk,-0.001976465292307033,glp1,weekly
+Novo Nordisk,Catalent,manufacturing,0.007124118103051663,glp1,weekly
+Semaglutide,Compounding,shortage,0.013609542400086588,glp1,weekly
+Compounding,Hims & Hers,seller,-0.012314194218235076,glp1,weekly
+Tesla,EV,category,-0.001358222509772614,ev-battery,daily
+BYD,EV,category,-0.002881716548540026,ev-battery,daily
+EV,Rivian,maker,0.001847307686995358,ev-battery,daily
+EV,Lucid,maker,0.0023554105753200343,ev-battery,daily
+Tesla,Li-ion battery,component,-0.0056054375746204844,ev-battery,daily
+BYD,Li-ion battery,component,0.005145487312149473,ev-battery,daily
+EV,Li-ion battery,component,0.003350666221405049,ev-battery,daily
+EV,Charging station,infrastructure,0.010040185316643175,ev-battery,daily
+Li-ion battery,CATL,supplier,0.0035066979452036975,ev-battery,daily
+Li-ion battery,Panasonic,supplier,0.0032554931805737187,ev-battery,daily
+Li-ion battery,LG Energy Solution,supplier,-0.0057261948646228095,ev-battery,daily
+Li-ion battery,Lithium,material,0.002604055669205846,ev-battery,daily
+Li-ion battery,Cobalt,material,0.0035738516859124434,ev-battery,daily
+Li-ion battery,Nickel,material,-0.002158743052874836,ev-battery,daily
+Li-ion battery,Graphite,material,-0.000630089719828926,ev-battery,daily
+Li-ion battery,Solid-state battery,next-gen,-0.0008416029546011615,ev-battery,daily
+Lithium,Albemarle,producer,0.001261244376250934,ev-battery,daily
+Tesla,EV,category,0.026347011633924645,ev-battery,weekly
+BYD,EV,category,0.01704732156866587,ev-battery,weekly
+EV,Rivian,maker,-0.03280376474438353,ev-battery,weekly
+EV,Lucid,maker,-0.0007669101363579588,ev-battery,weekly
+Tesla,Li-ion battery,component,-0.004127900937833294,ev-battery,weekly
+BYD,Li-ion battery,component,-0.00929954532451927,ev-battery,weekly
+EV,Li-ion battery,component,-0.029712766357923383,ev-battery,weekly
+EV,Charging station,infrastructure,0.03331247301331356,ev-battery,weekly
+Li-ion battery,CATL,supplier,0.015407805081227462,ev-battery,weekly
+Li-ion battery,Panasonic,supplier,0.02984112900135534,ev-battery,weekly
+Li-ion battery,LG Energy Solution,supplier,0.028889192380046044,ev-battery,weekly
+Li-ion battery,Lithium,material,-0.018753206747902665,ev-battery,weekly
+Li-ion battery,Cobalt,material,-0.009559989437530753,ev-battery,weekly
+Li-ion battery,Nickel,material,0.001705387314389642,ev-battery,weekly
+Li-ion battery,Graphite,material,0.013681553901861404,ev-battery,weekly
+Li-ion battery,Solid-state battery,next-gen,-0.0205205122295765,ev-battery,weekly
+Lithium,Albemarle,producer,-0.012457841926710018,ev-battery,weekly
+Coronavirus,COVID-19 pandemic,causes,0.0007414489668553688,covid,daily
+COVID-19 pandemic,Vaccine,response,-0.002688023075577301,covid,daily
+Vaccine,mRNA vaccine,technology,0.004123863936589565,covid,daily
+mRNA vaccine,Moderna,maker,0.004282863256939148,covid,daily
+mRNA vaccine,BioNTech,maker,-0.0001868523568645461,covid,daily
+mRNA vaccine,Pfizer,maker,0.00269320001760133,covid,daily
+Vaccine,AstraZeneca,maker,-0.01063182397688837,covid,daily
+COVID-19 pandemic,Remdesivir,treatment,-0.0034227034395781473,covid,daily
+Remdesivir,Gilead,maker,0.02962155306495653,covid,daily
+COVID-19 pandemic,Lockdown,response,0.002724835574971742,covid,daily
+Lockdown,Zoom,beneficiary,0.00156808257959269,covid,daily
+Lockdown,Peloton,beneficiary,-0.001304381500445784,covid,daily
+COVID-19 pandemic,Cruise ship,victim,-0.0010212698640866876,covid,daily
+Cruise ship,Carnival,operator,-0.00929412215916054,covid,daily
+COVID-19 pandemic,Airline,victim,-0.003374419746686893,covid,daily
+Airline,Boeing,supplier,0.0060254493788659685,covid,daily
+COVID-19 pandemic,PPE,demand,-0.006976020627702237,covid,daily
+Coronavirus,COVID-19 pandemic,causes,-0.044118716317439514,covid,weekly
+COVID-19 pandemic,Vaccine,response,-0.005017511077493264,covid,weekly
+Vaccine,mRNA vaccine,technology,0.039029609092105136,covid,weekly
+mRNA vaccine,Moderna,maker,-0.01228968641680818,covid,weekly
+mRNA vaccine,BioNTech,maker,0.09883326898080692,covid,weekly
+mRNA vaccine,Pfizer,maker,-0.044520472562952815,covid,weekly
+Vaccine,AstraZeneca,maker,0.0036231923835213856,covid,weekly
+COVID-19 pandemic,Remdesivir,treatment,-0.011789359195231858,covid,weekly
+Remdesivir,Gilead,maker,-0.03964621114070558,covid,weekly
+COVID-19 pandemic,Lockdown,response,-0.08065711042626982,covid,weekly
+Lockdown,Zoom,beneficiary,-0.053747981270827555,covid,weekly
+Lockdown,Peloton,beneficiary,-0.061616880665956136,covid,weekly
+COVID-19 pandemic,Cruise ship,victim,-0.01780590814690152,covid,weekly
+Cruise ship,Carnival,operator,-0.08568240953836269,covid,weekly
+COVID-19 pandemic,Airline,victim,0.011603197013511826,covid,weekly
+Airline,Boeing,supplier,-0.04714704034645549,covid,weekly
+COVID-19 pandemic,PPE,demand,-0.013071817402563822,covid,weekly
