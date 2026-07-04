@@ -51,26 +51,54 @@ The lag structure is where it gets interesting. The *strongest* edges peak at la
 
 Median peak lag across all edges: **7 days**. 69% of edges peak at a lag of ≥1 day. That is the window a model — or a person — could act in.
 
+## Phase 1 — the same test, four independent narratives
+
+One theme could be an AI-era artifact. So Phase 1 reran the identical test on three more graphs from unrelated narratives — the **GLP-1 drug chain** (semaglutide → Novo/Lilly → food & dialysis victims), the **EV/battery chain** (Tesla/BYD → cells → lithium/cobalt/nickel), and the **COVID chain** (2020–2022 data: pandemic → vaccines/lockdown → travel victims) — and upgraded the statistics to what a referee would demand: a **degree-preserving graph-permutation null** (rewire the real graph 1,000 times, preserving every node's degree) instead of random pair sampling.
+
+| theme | nodes | edges | decay stat (1hop − ≥3hop) | permutation p |
+|---|---|---|---|---|
+| AI buildout | 34 | 39 | 0.035 | **0.003** |
+| COVID (2020–22) | 18 | 17 | 0.115 | **0.001** |
+| EV / battery | 16 | 17 | 0.072 | 0.131 |
+| GLP-1 | 15 | 14 | 0.008 | 0.499 |
+
+Pooled across all 939 pairs from the four graphs, the decay is unambiguous:
+
+| distance (hops) | 1 | 2 | 3 | 4 | 5 |
+|---|---|---|---|---|---|
+| mean peak corr (n) | **0.149** (87) | 0.114 (280) | 0.101 (327) | 0.097 (192) | 0.078 (53) |
+
+- Pooled 1-hop vs ≥3-hop: Mann-Whitney **p = 0.0008**
+- Fisher-combined graph-permutation p across themes: **p = 0.00015**
+
+![phase 1 decay](results/phase1_decay.png)
+
+**The verdict on Phase 0's p ≈ 0.08: the gradient is real.** Two independent narratives from two different eras each clear p ≤ 0.003 on the permutation null, and the pooled curve decays monotonically across all five distances.
+
+**And one honest negative.** The direction test — restricted to the 57 edges with peak lag ≥ 1 day, where forward and reverse correlations actually differ — came out flat: 28/57 forward, binomial p = 0.60. At this resolution attention *co-moves along economic edges* but does not detectably favor our hypothesized upstream→downstream orientation. Cross-correlation may simply be too blunt for direction (it isn't causal); Phase 2's tools (transfer entropy, event-based identification) inherit this as their first open question. GLP-1's flat decay is the other miss worth reporting: a 15-node graph over a narrative that is mostly *one* entity's rise may not have enough independent nodes for the test to bite.
+
 ## Run it yourself
 
 ```bash
 python -m venv .venv && .venv/bin/pip install -r requirements.txt
-.venv/bin/python scripts/run_phase0.py
+.venv/bin/python scripts/run_phase0.py   # the original falsification test
+.venv/bin/python scripts/run_phase1.py   # four themes + permutation null
 ```
 
-One script, no API keys, ~3 minutes (Wikimedia pageviews are free; responses are cached in `data/raw/`). Outputs land in `results/`.
+No API keys, ~10 minutes on first run (Wikimedia pageviews are free; responses are cached in `data/raw/`, and this repo ships the cache so reruns are instant). Outputs land in `results/`.
 
-## Honest limitations (Phase 0)
+## Honest limitations
 
-- **One theme, one proxy.** A single 34-node graph and Wikipedia-only attention. The gradient is real but underpowered (p ≈ 0.08).
-- **Correlation, not causation.** A 19-day lag from "Generative AI" to "Nvidia" is consistent with propagation, and also with slow common drivers. Phase 1 adds directionality tests and event-based identification.
-- **Hand-drawn edges.** The graph encodes my priors. The eventual system learns its edges from data (supply-chain filings, co-mentions, patents).
+- **One proxy.** Wikipedia pageviews only. GDELT news mentions and Google Trends are the natural replications.
+- **Correlation, not causation — and no direction yet.** The decay survives a degree-preserving permutation null, but the forward/reverse test is flat; nothing here identifies *causal* propagation.
+- **Hand-drawn edges.** The graphs encode my priors. The eventual system learns its edges from data (supply-chain filings, co-mentions, patents).
 - **Attention ≠ alpha.** Whether any of this survives transaction costs against efficient prices is a Phase 3 question, deliberately deferred.
 
 ## Roadmap
 
 - [x] **Phase 0 — falsification test**: does attention decay with graph distance? *(yes, weakly — worth continuing)*
-- [ ] **Phase 1 — scale the evidence**: more themes (GLP-1 chain, EV chain, COVID chain), GDELT news mentions + Google Trends as second/third attention proxies, degree-preserving graph permutation tests, transfer-entropy for direction.
+- [x] **Phase 1 — scale the evidence**: three more themes across two eras + degree-preserving permutation null. *(Decay confirmed: pooled p = 0.0008, Fisher p = 0.00015. Direction: still unresolved.)*
+- [ ] **Phase 1b — direction & proxies**: transfer entropy / event-based tests for direction; GDELT + Google Trends as independent attention proxies.
 - [ ] **Phase 2 — model it**: temporal GNN over the entity graph predicting next-week attention shocks; Hawkes processes for burst timing; contrastive embeddings of "attention episodes" (does robots→GPU→power rhyme with ChatGPT→GPU→power?).
 - [ ] **Phase 3 — the capital-flow link**: do graph-predicted attention shocks lead returns/volume beyond momentum baselines (Cohen & Frazzini's *Economic Links and Predictable Returns* is the benchmark to beat)?
 

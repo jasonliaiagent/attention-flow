@@ -1,13 +1,27 @@
-"""The economic attention graph for the AI-buildout theme (Phase 0).
+"""Economic attention graphs.
 
 Nodes are entities with a Wikipedia article (our attention proxy).
 Edges are directed hypotheses: "attention on SRC should later show up on DST",
 following supply-chain / dependency links downstream.
 
-Phase 0 deliberately uses ONE theme (the 2023-2026 AI capex chain) because it
-is the cleanest recent example of multi-hop attention propagation:
-AI models -> GPUs -> fabs/HBM -> data centers -> power -> grid -> commodities.
+Phase 0 used ONE theme (the 2023-2026 AI capex chain). Phase 1 adds three
+independent themes — GLP-1 drugs, EV/battery, and COVID (a different era
+entirely) — so the distance-decay test is powered by ~120 edges across
+unrelated narratives instead of 39 edges from a single one.
 """
+
+from dataclasses import dataclass, field
+
+
+@dataclass
+class Theme:
+    name: str
+    window: tuple[str, str]  # (YYYYMMDD, YYYYMMDD)
+    nodes: dict[str, str]  # node name -> Wikipedia article title
+    edges: list[tuple[str, str, str]] = field(default_factory=list)
+
+    def edge_set(self) -> set[tuple[str, str]]:
+        return {(s, d) for s, d, _ in self.edges}
 
 # node name -> exact English Wikipedia article title
 NODES: dict[str, str] = {
@@ -105,3 +119,130 @@ EDGES: list[tuple[str, str, str]] = [
 
 def edge_set() -> set[tuple[str, str]]:
     return {(s, d) for s, d, _ in EDGES}
+
+
+# ---------------------------------------------------------------------------
+# Phase 1 themes
+# ---------------------------------------------------------------------------
+
+GLP1_NODES = {
+    "Semaglutide": "Semaglutide",
+    "Tirzepatide": "Tirzepatide",
+    "GLP-1": "Glucagon-like peptide-1 receptor agonist",
+    "Novo Nordisk": "Novo Nordisk",
+    "Eli Lilly": "Eli Lilly and Company",
+    "Obesity": "Obesity",
+    "Weight loss": "Weight loss",
+    "Bariatric surgery": "Bariatric surgery",
+    "Compounding": "Compounding",
+    "Catalent": "Catalent",
+    "WeightWatchers": "WW International",
+    "PepsiCo": "PepsiCo",
+    "Mondelez": "Mondelez International",
+    "DaVita": "DaVita",
+    "Hims & Hers": "Hims & Hers Health",
+}
+
+GLP1_EDGES = [
+    ("Semaglutide", "Novo Nordisk", "maker"),
+    ("Tirzepatide", "Eli Lilly", "maker"),
+    ("Semaglutide", "GLP-1", "drug-class"),
+    ("Tirzepatide", "GLP-1", "drug-class"),
+    ("Semaglutide", "Weight loss", "indication"),
+    ("Semaglutide", "Obesity", "indication"),
+    ("GLP-1", "Bariatric surgery", "substitute"),
+    ("GLP-1", "WeightWatchers", "disruption"),
+    ("GLP-1", "PepsiCo", "demand-risk"),
+    ("GLP-1", "Mondelez", "demand-risk"),
+    ("GLP-1", "DaVita", "demand-risk"),
+    ("Novo Nordisk", "Catalent", "manufacturing"),
+    ("Semaglutide", "Compounding", "shortage"),
+    ("Compounding", "Hims & Hers", "seller"),
+]
+
+EV_NODES = {
+    "EV": "Electric vehicle",
+    "Tesla": "Tesla, Inc.",
+    "BYD": "BYD Company",
+    "Rivian": "Rivian",
+    "Lucid": "Lucid Motors",
+    "Li-ion battery": "Lithium-ion battery",
+    "Solid-state battery": "Solid-state battery",
+    "CATL": "Contemporary Amperex Technology",
+    "Panasonic": "Panasonic",
+    "LG Energy Solution": "LG Energy Solution",
+    "Lithium": "Lithium",
+    "Cobalt": "Cobalt",
+    "Nickel": "Nickel",
+    "Graphite": "Graphite",
+    "Albemarle": "Albemarle Corporation",
+    "Charging station": "Charging station",
+}
+
+EV_EDGES = [
+    ("Tesla", "EV", "category"),
+    ("BYD", "EV", "category"),
+    ("EV", "Rivian", "maker"),
+    ("EV", "Lucid", "maker"),
+    ("Tesla", "Li-ion battery", "component"),
+    ("BYD", "Li-ion battery", "component"),
+    ("EV", "Li-ion battery", "component"),
+    ("EV", "Charging station", "infrastructure"),
+    ("Li-ion battery", "CATL", "supplier"),
+    ("Li-ion battery", "Panasonic", "supplier"),
+    ("Li-ion battery", "LG Energy Solution", "supplier"),
+    ("Li-ion battery", "Lithium", "material"),
+    ("Li-ion battery", "Cobalt", "material"),
+    ("Li-ion battery", "Nickel", "material"),
+    ("Li-ion battery", "Graphite", "material"),
+    ("Li-ion battery", "Solid-state battery", "next-gen"),
+    ("Lithium", "Albemarle", "producer"),
+]
+
+COVID_NODES = {
+    "COVID-19 pandemic": "COVID-19 pandemic",
+    "Coronavirus": "Coronavirus",
+    "Vaccine": "Vaccine",
+    "mRNA vaccine": "MRNA vaccine",
+    "Pfizer": "Pfizer",
+    "BioNTech": "BioNTech",
+    "Moderna": "Moderna",
+    "AstraZeneca": "AstraZeneca",
+    "Remdesivir": "Remdesivir",
+    "Gilead": "Gilead Sciences",
+    "Lockdown": "Lockdown",
+    "Zoom": "Zoom Video Communications",
+    "Peloton": "Peloton Interactive",
+    "Cruise ship": "Cruise ship",
+    "Carnival": "Carnival Corporation & plc",
+    "Airline": "Airline",
+    "Boeing": "Boeing",
+    "PPE": "Personal protective equipment",
+}
+
+COVID_EDGES = [
+    ("Coronavirus", "COVID-19 pandemic", "causes"),
+    ("COVID-19 pandemic", "Vaccine", "response"),
+    ("Vaccine", "mRNA vaccine", "technology"),
+    ("mRNA vaccine", "Moderna", "maker"),
+    ("mRNA vaccine", "BioNTech", "maker"),
+    ("mRNA vaccine", "Pfizer", "maker"),
+    ("Vaccine", "AstraZeneca", "maker"),
+    ("COVID-19 pandemic", "Remdesivir", "treatment"),
+    ("Remdesivir", "Gilead", "maker"),
+    ("COVID-19 pandemic", "Lockdown", "response"),
+    ("Lockdown", "Zoom", "beneficiary"),
+    ("Lockdown", "Peloton", "beneficiary"),
+    ("COVID-19 pandemic", "Cruise ship", "victim"),
+    ("Cruise ship", "Carnival", "operator"),
+    ("COVID-19 pandemic", "Airline", "victim"),
+    ("Airline", "Boeing", "supplier"),
+    ("COVID-19 pandemic", "PPE", "demand"),
+]
+
+THEMES: dict[str, Theme] = {
+    "ai-buildout": Theme("ai-buildout", ("20220701", "20260630"), NODES, EDGES),
+    "glp1": Theme("glp1", ("20220101", "20260630"), GLP1_NODES, GLP1_EDGES),
+    "ev-battery": Theme("ev-battery", ("20200101", "20260630"), EV_NODES, EV_EDGES),
+    "covid": Theme("covid", ("20200101", "20221231"), COVID_NODES, COVID_EDGES),
+}

@@ -16,7 +16,7 @@ import requests
 
 API = (
     "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/"
-    "{project}/all-access/user/{article}/daily/{start}/{end}"
+    "{project}/all-access/{agent}/{article}/daily/{start}/{end}"
 )
 # Wikimedia requires a descriptive User-Agent; the default python UA is blocked.
 HEADERS = {"User-Agent": "attention-flow/0.1 (open-source research; contact via GitHub)"}
@@ -36,23 +36,28 @@ def fetch_pageviews(
         return json.loads(cache.read_text())
 
     quoted = urllib.parse.quote(article.replace(" ", "_"), safe="")
-    url = API.format(project=project, article=quoted, start=start, end=end)
     resp = None
-    for attempt in range(6):
-        try:
-            resp = requests.get(url, headers=HEADERS, timeout=60)
-            if resp.status_code != 429:
-                break
-        except requests.exceptions.RequestException:
-            if attempt == 5:
-                raise
-        time.sleep(2**attempt)
+    # A handful of high-traffic articles 404 under the human-only "user" agent
+    # filter (an API quirk); fall back to all-agents for those.
+    for agent in ("user", "all-agents"):
+        url = API.format(project=project, agent=agent, article=quoted, start=start, end=end)
+        for attempt in range(10):
+            try:
+                resp = requests.get(url, headers=HEADERS, timeout=60)
+                if resp.status_code != 429:
+                    break
+            except requests.exceptions.RequestException:
+                if attempt == 9:
+                    raise
+            time.sleep(min(2**attempt, 60))
+        if resp.status_code != 404:
+            break
     if resp.status_code == 404:
         return None
     resp.raise_for_status()
     data = {item["timestamp"][:8]: item["views"] for item in resp.json()["items"]}
     cache.write_text(json.dumps(data))
-    time.sleep(1.0)  # stay well under the API's rate limit
+    time.sleep(2.0)  # stay well under the API's rate limit
     return data
 
 

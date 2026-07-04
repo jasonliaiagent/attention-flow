@@ -49,6 +49,39 @@ def plot_distance_decay(by_distance: dict[int, np.ndarray], out: Path) -> None:
     plt.close(fig)
 
 
+def plot_theme_decay(
+    theme_profiles: dict[str, dict[int, np.ndarray]],
+    pooled: dict[int, np.ndarray],
+    out: Path,
+) -> None:
+    """Distance-decay curves for every theme plus the pooled curve."""
+    fig, ax = plt.subplots(figsize=(8, 5))
+    colors = {"ai-buildout": "#d95f02", "glp1": "#7570b3", "ev-battery": "#1b9e77", "covid": "#e7298a"}
+    for theme, by_d in theme_profiles.items():
+        dists = sorted(by_d)
+        ax.plot(
+            dists,
+            [by_d[d].mean() for d in dists],
+            marker="o",
+            lw=1.2,
+            alpha=0.55,
+            label=theme,
+            color=colors.get(theme, "#666"),
+        )
+    dists = sorted(pooled)
+    means = [pooled[d].mean() for d in dists]
+    sems = [pooled[d].std() / np.sqrt(len(pooled[d])) for d in dists]
+    ax.errorbar(dists, means, yerr=sems, marker="o", lw=3, capsize=4, color="#222", label="pooled (all themes)")
+    ax.set_xlabel("graph distance between entities (hops)")
+    ax.set_ylabel("mean peak lagged attention correlation")
+    ax.set_title("Attention co-movement vs economic-graph distance, four independent themes")
+    ax.set_xticks(dists)
+    ax.legend(fontsize=9)
+    fig.tight_layout()
+    fig.savefig(out, dpi=150)
+    plt.close(fig)
+
+
 def plot_top_edges(results: list[EdgeResult], out: Path, top_n: int = 20) -> None:
     top = sorted(results, key=lambda r: r.peak_corr, reverse=True)[:top_n]
     labels = [f"{r.src} → {r.dst}" for r in top][::-1]

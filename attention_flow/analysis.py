@@ -122,8 +122,22 @@ def graph_distances(nodes: list[str], edges: set[tuple[str, str]]) -> dict[tuple
     return dist
 
 
+def pair_peaks(shocks: pd.DataFrame) -> dict[tuple[str, str], float]:
+    """Peak lagged correlation for every unordered node pair (max of directions)."""
+    nodes = list(shocks.columns)
+    peaks: dict[tuple[str, str], float] = {}
+    for i, a in enumerate(nodes):
+        for b in nodes[i + 1 :]:
+            _, _, p_ab = lagged_corr(shocks[a], shocks[b])
+            _, _, p_ba = lagged_corr(shocks[b], shocks[a])
+            peaks[(a, b)] = max(p_ab, p_ba)
+    return peaks
+
+
 def distance_profile(
-    shocks: pd.DataFrame, edges: set[tuple[str, str]]
+    shocks: pd.DataFrame,
+    edges: set[tuple[str, str]],
+    peaks: dict[tuple[str, str], float] | None = None,
 ) -> tuple[pd.DataFrame, dict[int, np.ndarray]]:
     """Peak lagged correlation of every unordered pair, grouped by graph distance.
 
@@ -132,21 +146,110 @@ def distance_profile(
     edge-vs-random comparison can't show (in a small supply-chain graph most
     'random' pairs are 2-hop neighbours, i.e. genuinely connected).
     """
-    nodes = list(shocks.columns)
-    dist = graph_distances(nodes, edges)
+    peaks = peaks if peaks is not None else pair_peaks(shocks)
+    dist = graph_distances(list(shocks.columns), edges)
     rows = []
     by_distance: dict[int, list[float]] = {}
-    for i, a in enumerate(nodes):
-        for b in nodes[i + 1 :]:
-            d = dist.get((a, b))
-            if d is None:
-                continue
-            _, lag_ab, p_ab = lagged_corr(shocks[a], shocks[b])
-            _, lag_ba, p_ba = lagged_corr(shocks[b], shocks[a])
-            peak = max(p_ab, p_ba)
-            rows.append({"a": a, "b": b, "distance": d, "peak_corr": peak})
-            by_distance.setdefault(d, []).append(peak)
+    for (a, b), peak in peaks.items():
+        d = dist.get((a, b))
+        if d is None:
+            continue
+        rows.append({"a": a, "b": b, "distance": d, "peak_corr": peak})
+        by_distance.setdefault(d, []).append(peak)
     return pd.DataFrame(rows), {d: np.array(v) for d, v in sorted(by_distance.items())}
+
+
+def _decay_stat(
+    peaks: dict[tuple[str, str], float],
+    nodes: list[str],
+    edges: set[tuple[str, str]],
+) -> float | None:
+    """Distance-decay statistic: mean peak corr at 1 hop minus at >=3 hops."""
+    dist = graph_distances(nodes, edges)
+    near, far = [], []
+    for (a, b), p in peaks.items():
+        d = dist.get((a, b))
+        if d == 1:
+            near.append(p)
+        elif d is not None and d >= 3:
+            far.append(p)
+    if not near or not far:
+        return None
+    return float(np.mean(near) - np.mean(far))
+
+
+def _rewire(edges: list[tuple[str, str]], rng: random.Random, n_swaps: int) -> list[tuple[str, str]]:
+    """Degree-preserving double-edge swaps on an undirected simple graph."""
+    e = list(edges)
+    existing = {frozenset(x) for x in e}
+    for _ in range(n_swaps):
+        i, j = rng.randrange(len(e)), rng.randrange(len(e))
+        (a, b), (c, d) = e[i], e[j]
+        if len({a, b, c, d}) < 4:
+            continue
+        n1, n2 = frozenset((a, d)), frozenset((c, b))
+        if n1 in existing or n2 in existing:
+            continue
+        existing -= {frozenset(e[i]), frozenset(e[j])}
+        e[i], e[j] = (a, d), (c, b)
+        existing |= {n1, n2}
+    return e
+
+
+def permutation_test(
+    peaks: dict[tuple[str, str], float],
+    nodes: list[str],
+    edge_pairs: set[tuple[str, str]],
+    n_perm: int = 1000,
+    seed: int = 7,
+) -> tuple[float, float]:
+    """Degree-preserving graph-permutation p-value for the distance-decay stat.
+
+    Stronger null than random pair sampling: rewire the ACTUAL graph while
+    preserving every node's degree, recompute the decay statistic each time,
+    and ask how often chance topology matches the observed decay.
+    """
+    rng = random.Random(seed)
+    und = list({tuple(sorted(p)) for p in edge_pairs})
+    observed = _decay_stat(peaks, nodes, edge_pairs)
+    null: list[float] = []
+    while len(null) < n_perm:
+        rewired = _rewire(und, rng, n_swaps=10 * len(und))
+        s = _decay_stat(peaks, nodes, {(a, b) for a, b in rewired})
+        if s is not None:
+            null.append(s)
+    # add-one smoothing: n rewires can bound p, never measure exactly 0
+    p = (sum(s >= observed for s in null) + 1) / (n_perm + 1)
+    return observed, float(p)
+
+
+def direction_test(results: list["EdgeResult"]) -> tuple[int, int, float]:
+    """Among edges with peak lag >= 1 day, does forward beat reverse?
+
+    Lag-0 edges are excluded: there forward and reverse correlations are the
+    same number, so including them only dilutes the test with guaranteed ties.
+    Returns (n, forward_wins, one-sided binomial p).
+    """
+    from math import comb
+
+    lagged = [r for r in results if r.peak_lag >= 1]
+    n = len(lagged)
+    wins = sum(r.peak_corr > r.reverse_peak_corr for r in lagged)
+    p = sum(comb(n, k) for k in range(wins, n + 1)) / 2**n if n else float("nan")
+    return n, wins, p
+
+
+def fisher_combine(p_values: list[float]) -> float:
+    """Fisher's method: combine independent one-sided p-values."""
+    from math import exp, log
+
+    k = len(p_values)
+    x = sum(-log(max(p, 1e-12)) for p in p_values)  # = chi2 stat / 2
+    term, total = exp(-x), exp(-x)
+    for i in range(1, k):
+        term *= x / i
+        total += term
+    return float(total)
 
 
 def mann_whitney_p(x: np.ndarray, y: np.ndarray) -> float:

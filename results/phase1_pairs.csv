@@ -1,0 +1,940 @@
+a,b,distance,peak_corr,theme
+ChatGPT,OpenAI,1,0.32855218298299804,ai-buildout
+ChatGPT,Anthropic,2,0.12053653047185675,ai-buildout
+ChatGPT,AI,2,0.1703969456410265,ai-buildout
+ChatGPT,Humanoid robot,2,0.11229368343468404,ai-buildout
+ChatGPT,Nvidia,1,0.11136462937503538,ai-buildout
+ChatGPT,AMD,3,0.005385224517278509,ai-buildout
+ChatGPT,TSMC,2,0.08114367502052669,ai-buildout
+ChatGPT,ASML,3,0.1419209978941695,ai-buildout
+ChatGPT,SK Hynix,3,0.08870129938370751,ai-buildout
+ChatGPT,Micron,3,0.052671286918027097,ai-buildout
+ChatGPT,Samsung,3,0.10985868899096879,ai-buildout
+ChatGPT,HBM,2,0.09595910561255752,ai-buildout
+ChatGPT,Data center,2,0.06377975328554755,ai-buildout
+ChatGPT,Azure,1,0.015049137713225122,ai-buildout
+ChatGPT,AWS,3,0.03728143576690446,ai-buildout
+ChatGPT,Google Cloud,3,0.07715400088240844,ai-buildout
+ChatGPT,CoreWeave,3,0.3081176902674856,ai-buildout
+ChatGPT,Oracle,3,0.0626344644891366,ai-buildout
+ChatGPT,Vertiv,3,0.0312134209429917,ai-buildout
+ChatGPT,Nuclear power,3,0.18427575282121747,ai-buildout
+ChatGPT,SMR,4,0.12175508541532563,ai-buildout
+ChatGPT,Natural gas,3,0.03761106728465903,ai-buildout
+ChatGPT,Constellation,3,0.11322982677836677,ai-buildout
+ChatGPT,NextEra,3,0.09655395903774885,ai-buildout
+ChatGPT,Vistra,3,0.06472680560243924,ai-buildout
+ChatGPT,GE Vernova,3,0.021575655274329426,ai-buildout
+ChatGPT,Electrical grid,3,0.16361019398709373,ai-buildout
+ChatGPT,Transformer (device),4,0.09053420618849105,ai-buildout
+ChatGPT,Quanta Services,4,0.05432991473921519,ai-buildout
+ChatGPT,Eaton,4,0.08551027174847205,ai-buildout
+ChatGPT,Copper,4,0.1438792178421473,ai-buildout
+ChatGPT,Uranium,4,0.21942438430959485,ai-buildout
+ChatGPT,Tesla,3,0.09428991278774718,ai-buildout
+OpenAI,Anthropic,2,0.0974717567133151,ai-buildout
+OpenAI,AI,2,0.08428762914396722,ai-buildout
+OpenAI,Humanoid robot,2,0.07584324784642828,ai-buildout
+OpenAI,Nvidia,1,0.02240733815483106,ai-buildout
+OpenAI,AMD,3,0.06126007068755516,ai-buildout
+OpenAI,TSMC,2,0.08297800781081492,ai-buildout
+OpenAI,ASML,3,0.0661350952641111,ai-buildout
+OpenAI,SK Hynix,3,0.0839209760518232,ai-buildout
+OpenAI,Micron,3,0.0597880873697459,ai-buildout
+OpenAI,Samsung,3,0.13032192470678838,ai-buildout
+OpenAI,HBM,2,0.053354589979352586,ai-buildout
+OpenAI,Data center,2,0.08922529059149625,ai-buildout
+OpenAI,Azure,1,0.0603625427050393,ai-buildout
+OpenAI,AWS,3,0.029620016507098033,ai-buildout
+OpenAI,Google Cloud,3,0.06073434994853461,ai-buildout
+OpenAI,CoreWeave,3,0.08717728750798626,ai-buildout
+OpenAI,Oracle,3,0.0659204045119027,ai-buildout
+OpenAI,Vertiv,3,0.061456086632179004,ai-buildout
+OpenAI,Nuclear power,3,0.034375021090436546,ai-buildout
+OpenAI,SMR,4,0.08362681585384552,ai-buildout
+OpenAI,Natural gas,3,0.08647383065529317,ai-buildout
+OpenAI,Constellation,3,0.028393350007111785,ai-buildout
+OpenAI,NextEra,3,0.04224215153603204,ai-buildout
+OpenAI,Vistra,3,0.07037509938875322,ai-buildout
+OpenAI,GE Vernova,3,0.054935698430477624,ai-buildout
+OpenAI,Electrical grid,3,0.05701202458819263,ai-buildout
+OpenAI,Transformer (device),4,0.10722357222963902,ai-buildout
+OpenAI,Quanta Services,4,0.08687276889737551,ai-buildout
+OpenAI,Eaton,4,0.06778120492221708,ai-buildout
+OpenAI,Copper,4,0.05728637660627645,ai-buildout
+OpenAI,Uranium,4,0.057777306896276,ai-buildout
+OpenAI,Tesla,3,0.16556164152477706,ai-buildout
+Anthropic,AI,2,0.13320181210493912,ai-buildout
+Anthropic,Humanoid robot,2,0.034574424560034914,ai-buildout
+Anthropic,Nvidia,1,0.036163193282480445,ai-buildout
+Anthropic,AMD,3,0.04827147631480997,ai-buildout
+Anthropic,TSMC,2,0.0675614946638488,ai-buildout
+Anthropic,ASML,3,0.11458091244093696,ai-buildout
+Anthropic,SK Hynix,3,0.04630546938945772,ai-buildout
+Anthropic,Micron,3,0.0485838904991472,ai-buildout
+Anthropic,Samsung,3,0.01144327411300046,ai-buildout
+Anthropic,HBM,2,0.07100601568062688,ai-buildout
+Anthropic,Data center,2,0.030387730214330163,ai-buildout
+Anthropic,Azure,3,0.08773872461655093,ai-buildout
+Anthropic,AWS,3,0.07230674762751454,ai-buildout
+Anthropic,Google Cloud,3,0.07050460293441288,ai-buildout
+Anthropic,CoreWeave,3,0.08790037048381304,ai-buildout
+Anthropic,Oracle,3,0.01728907312339702,ai-buildout
+Anthropic,Vertiv,3,0.12509536231247345,ai-buildout
+Anthropic,Nuclear power,3,0.030859637832235345,ai-buildout
+Anthropic,SMR,4,0.1613933492873856,ai-buildout
+Anthropic,Natural gas,3,0.13679848429287123,ai-buildout
+Anthropic,Constellation,3,0.03214937287650673,ai-buildout
+Anthropic,NextEra,3,0.11269646806568108,ai-buildout
+Anthropic,Vistra,3,0.06838092027110322,ai-buildout
+Anthropic,GE Vernova,3,0.24107685822252845,ai-buildout
+Anthropic,Electrical grid,3,0.0542461264149495,ai-buildout
+Anthropic,Transformer (device),4,0.07860483136113007,ai-buildout
+Anthropic,Quanta Services,4,0.0626776852306303,ai-buildout
+Anthropic,Eaton,4,0.0775595534762582,ai-buildout
+Anthropic,Copper,4,0.0484102503302887,ai-buildout
+Anthropic,Uranium,4,0.09731914498926854,ai-buildout
+Anthropic,Tesla,3,0.0675813009584795,ai-buildout
+AI,Humanoid robot,2,0.040985690732539826,ai-buildout
+AI,Nvidia,1,0.14280751117481005,ai-buildout
+AI,AMD,1,0.07631114253640608,ai-buildout
+AI,TSMC,2,0.06425845396768273,ai-buildout
+AI,ASML,3,0.21796777236736728,ai-buildout
+AI,SK Hynix,3,0.06775144517050619,ai-buildout
+AI,Micron,3,0.12402738456394699,ai-buildout
+AI,Samsung,3,0.10328202841004097,ai-buildout
+AI,HBM,2,0.12380107230381461,ai-buildout
+AI,Data center,1,0.07589751172993174,ai-buildout
+AI,Azure,3,0.09841949509568826,ai-buildout
+AI,AWS,2,0.09026071118054081,ai-buildout
+AI,Google Cloud,2,0.14953006925393753,ai-buildout
+AI,CoreWeave,2,0.07777868994798569,ai-buildout
+AI,Oracle,2,0.07213920778360018,ai-buildout
+AI,Vertiv,2,0.0543976682482633,ai-buildout
+AI,Nuclear power,2,0.03872109282609129,ai-buildout
+AI,SMR,3,0.08729223467372155,ai-buildout
+AI,Natural gas,2,0.04689874735221097,ai-buildout
+AI,Constellation,2,0.02114709759342886,ai-buildout
+AI,NextEra,2,0.0860061293621944,ai-buildout
+AI,Vistra,2,0.07648282338323148,ai-buildout
+AI,GE Vernova,2,-0.0047230225982478145,ai-buildout
+AI,Electrical grid,2,0.07365166839864415,ai-buildout
+AI,Transformer (device),3,0.16607900265938136,ai-buildout
+AI,Quanta Services,3,0.10950356051029765,ai-buildout
+AI,Eaton,3,0.11082861297775283,ai-buildout
+AI,Copper,3,0.06939212989013747,ai-buildout
+AI,Uranium,3,0.12022361579649524,ai-buildout
+AI,Tesla,3,0.06259923033886976,ai-buildout
+Humanoid robot,Nvidia,1,0.02621922829832502,ai-buildout
+Humanoid robot,AMD,3,0.08647144242433331,ai-buildout
+Humanoid robot,TSMC,2,0.053458450060273895,ai-buildout
+Humanoid robot,ASML,3,0.07884133377591539,ai-buildout
+Humanoid robot,SK Hynix,3,0.04036931396114608,ai-buildout
+Humanoid robot,Micron,3,0.12603405416809216,ai-buildout
+Humanoid robot,Samsung,3,0.08716195046004653,ai-buildout
+Humanoid robot,HBM,2,0.060157777389657004,ai-buildout
+Humanoid robot,Data center,2,0.07097419987287051,ai-buildout
+Humanoid robot,Azure,3,0.08074641399412993,ai-buildout
+Humanoid robot,AWS,3,0.08673405777088164,ai-buildout
+Humanoid robot,Google Cloud,3,0.23601343786366297,ai-buildout
+Humanoid robot,CoreWeave,3,0.13006473757485473,ai-buildout
+Humanoid robot,Oracle,3,0.08176500339457801,ai-buildout
+Humanoid robot,Vertiv,3,0.04941523056994576,ai-buildout
+Humanoid robot,Nuclear power,3,0.1437464409085389,ai-buildout
+Humanoid robot,SMR,4,0.19588880292413066,ai-buildout
+Humanoid robot,Natural gas,3,0.13452869845177692,ai-buildout
+Humanoid robot,Constellation,3,0.1623689585894549,ai-buildout
+Humanoid robot,NextEra,3,0.040497786738673866,ai-buildout
+Humanoid robot,Vistra,3,0.05516232885969013,ai-buildout
+Humanoid robot,GE Vernova,3,0.10513505140231909,ai-buildout
+Humanoid robot,Electrical grid,3,0.12474680683986794,ai-buildout
+Humanoid robot,Transformer (device),4,0.22190442935883306,ai-buildout
+Humanoid robot,Quanta Services,4,0.05551944904813641,ai-buildout
+Humanoid robot,Eaton,4,0.12031833644996687,ai-buildout
+Humanoid robot,Copper,4,0.20863827523367057,ai-buildout
+Humanoid robot,Uranium,4,0.11385781568591793,ai-buildout
+Humanoid robot,Tesla,1,0.08444504464388632,ai-buildout
+Nvidia,AMD,2,0.4295028730813762,ai-buildout
+Nvidia,TSMC,1,0.23086573828869403,ai-buildout
+Nvidia,ASML,2,0.13003482265915975,ai-buildout
+Nvidia,SK Hynix,2,0.03215506353064396,ai-buildout
+Nvidia,Micron,2,0.22115315352772674,ai-buildout
+Nvidia,Samsung,2,0.09590949245431085,ai-buildout
+Nvidia,HBM,1,0.08341349332388667,ai-buildout
+Nvidia,Data center,1,0.09332515856324394,ai-buildout
+Nvidia,Azure,2,0.09728796568349829,ai-buildout
+Nvidia,AWS,2,0.11652531236755546,ai-buildout
+Nvidia,Google Cloud,2,0.11930941451232747,ai-buildout
+Nvidia,CoreWeave,2,0.11142481471599595,ai-buildout
+Nvidia,Oracle,2,0.14334715111694366,ai-buildout
+Nvidia,Vertiv,2,0.09681573346916009,ai-buildout
+Nvidia,Nuclear power,2,0.11929891070801084,ai-buildout
+Nvidia,SMR,3,0.06512151594939118,ai-buildout
+Nvidia,Natural gas,2,0.041006744422757604,ai-buildout
+Nvidia,Constellation,2,0.0704738831007685,ai-buildout
+Nvidia,NextEra,2,0.0969062621921386,ai-buildout
+Nvidia,Vistra,2,0.08016670587338456,ai-buildout
+Nvidia,GE Vernova,2,0.004215387212497112,ai-buildout
+Nvidia,Electrical grid,2,0.108813845850769,ai-buildout
+Nvidia,Transformer (device),3,0.10775012577892894,ai-buildout
+Nvidia,Quanta Services,3,0.09914305199016088,ai-buildout
+Nvidia,Eaton,3,0.07266888578708741,ai-buildout
+Nvidia,Copper,3,0.12333339344911275,ai-buildout
+Nvidia,Uranium,3,0.20229267389563857,ai-buildout
+Nvidia,Tesla,2,0.033415718433964,ai-buildout
+AMD,TSMC,1,0.23619647064020474,ai-buildout
+AMD,ASML,2,0.07878098125759954,ai-buildout
+AMD,SK Hynix,4,0.08995572448456823,ai-buildout
+AMD,Micron,4,0.11378719099999728,ai-buildout
+AMD,Samsung,3,0.22498958765573435,ai-buildout
+AMD,HBM,3,0.08922356960363312,ai-buildout
+AMD,Data center,2,0.08671008831113881,ai-buildout
+AMD,Azure,4,0.09549719834163783,ai-buildout
+AMD,AWS,3,0.07247974275161803,ai-buildout
+AMD,Google Cloud,3,0.08022172346750711,ai-buildout
+AMD,CoreWeave,3,0.09193158211398497,ai-buildout
+AMD,Oracle,3,0.1304022397990582,ai-buildout
+AMD,Vertiv,3,0.12594896264782682,ai-buildout
+AMD,Nuclear power,3,0.05187605659353971,ai-buildout
+AMD,SMR,4,0.05124290243356138,ai-buildout
+AMD,Natural gas,3,0.12371782656113385,ai-buildout
+AMD,Constellation,3,0.10949661132703609,ai-buildout
+AMD,NextEra,3,0.06894628877458839,ai-buildout
+AMD,Vistra,3,0.0713946502158851,ai-buildout
+AMD,GE Vernova,3,0.07009351387729568,ai-buildout
+AMD,Electrical grid,3,0.09040085832742888,ai-buildout
+AMD,Transformer (device),4,0.056658445379377635,ai-buildout
+AMD,Quanta Services,4,0.11782083140076552,ai-buildout
+AMD,Eaton,4,0.04068706818661359,ai-buildout
+AMD,Copper,4,0.09474325337581027,ai-buildout
+AMD,Uranium,4,0.1376280979295838,ai-buildout
+AMD,Tesla,4,0.10363734833981013,ai-buildout
+TSMC,ASML,1,0.28727082715620844,ai-buildout
+TSMC,SK Hynix,3,0.07189673230192711,ai-buildout
+TSMC,Micron,3,0.07306537925756765,ai-buildout
+TSMC,Samsung,2,0.07360376852270036,ai-buildout
+TSMC,HBM,2,0.12187819993111301,ai-buildout
+TSMC,Data center,2,0.09192007601539262,ai-buildout
+TSMC,Azure,3,0.046917952949480854,ai-buildout
+TSMC,AWS,3,0.07397164788800997,ai-buildout
+TSMC,Google Cloud,3,0.11773984203229604,ai-buildout
+TSMC,CoreWeave,3,0.19000818081188456,ai-buildout
+TSMC,Oracle,3,0.08047129733564759,ai-buildout
+TSMC,Vertiv,3,0.052499581870076785,ai-buildout
+TSMC,Nuclear power,3,0.12602143234264648,ai-buildout
+TSMC,SMR,4,0.11166082933760998,ai-buildout
+TSMC,Natural gas,3,0.07925190280355354,ai-buildout
+TSMC,Constellation,3,0.05633549891060955,ai-buildout
+TSMC,NextEra,3,0.1259899607067851,ai-buildout
+TSMC,Vistra,3,0.04781992386339585,ai-buildout
+TSMC,GE Vernova,3,0.01345267896955057,ai-buildout
+TSMC,Electrical grid,3,0.17030431951950634,ai-buildout
+TSMC,Transformer (device),4,0.09812818984185871,ai-buildout
+TSMC,Quanta Services,4,0.12535786760534892,ai-buildout
+TSMC,Eaton,4,0.17679702532346867,ai-buildout
+TSMC,Copper,4,0.12284949185728944,ai-buildout
+TSMC,Uranium,4,0.10515987811407906,ai-buildout
+TSMC,Tesla,3,0.16138516115709473,ai-buildout
+ASML,SK Hynix,3,0.05131652016702584,ai-buildout
+ASML,Micron,3,0.07837544692121758,ai-buildout
+ASML,Samsung,1,0.07196225156731349,ai-buildout
+ASML,HBM,2,0.14136870173742633,ai-buildout
+ASML,Data center,3,0.024833115181671396,ai-buildout
+ASML,Azure,4,0.09377622527399417,ai-buildout
+ASML,AWS,4,0.08990139464401567,ai-buildout
+ASML,Google Cloud,4,0.19233816068654017,ai-buildout
+ASML,CoreWeave,4,0.11550092837772687,ai-buildout
+ASML,Oracle,4,0.08137936926338712,ai-buildout
+ASML,Vertiv,4,0.050419812020633184,ai-buildout
+ASML,Nuclear power,4,0.049090814376279185,ai-buildout
+ASML,SMR,5,0.05432359662286396,ai-buildout
+ASML,Natural gas,4,0.09370140367259344,ai-buildout
+ASML,Constellation,4,0.08013191497302936,ai-buildout
+ASML,NextEra,4,0.012891640510669121,ai-buildout
+ASML,Vistra,4,0.08872446104019967,ai-buildout
+ASML,GE Vernova,4,0.021210572064522166,ai-buildout
+ASML,Electrical grid,4,0.07462556122698095,ai-buildout
+ASML,Transformer (device),5,0.06697208619424969,ai-buildout
+ASML,Quanta Services,5,0.08477664505440415,ai-buildout
+ASML,Eaton,5,0.029704034723634747,ai-buildout
+ASML,Copper,5,0.08899511866307283,ai-buildout
+ASML,Uranium,5,0.10529703408680569,ai-buildout
+ASML,Tesla,4,0.14589987129138374,ai-buildout
+SK Hynix,Micron,2,0.06872877358981401,ai-buildout
+SK Hynix,Samsung,2,0.07045805682097388,ai-buildout
+SK Hynix,HBM,1,0.1141169595742533,ai-buildout
+SK Hynix,Data center,3,0.0882015116475264,ai-buildout
+SK Hynix,Azure,4,0.03395983590822657,ai-buildout
+SK Hynix,AWS,4,0.05525290073567104,ai-buildout
+SK Hynix,Google Cloud,4,0.04242762055750904,ai-buildout
+SK Hynix,CoreWeave,4,0.09294390875208304,ai-buildout
+SK Hynix,Oracle,4,0.09077588485355124,ai-buildout
+SK Hynix,Vertiv,4,0.06545303737763168,ai-buildout
+SK Hynix,Nuclear power,4,0.07005255252855391,ai-buildout
+SK Hynix,SMR,5,0.07941568472028185,ai-buildout
+SK Hynix,Natural gas,4,0.09390289201284797,ai-buildout
+SK Hynix,Constellation,4,0.07736968850305473,ai-buildout
+SK Hynix,NextEra,4,0.05830729010413646,ai-buildout
+SK Hynix,Vistra,4,0.09559845655294807,ai-buildout
+SK Hynix,GE Vernova,4,0.02894561427956382,ai-buildout
+SK Hynix,Electrical grid,4,0.06764659461080041,ai-buildout
+SK Hynix,Transformer (device),5,0.061891566647897966,ai-buildout
+SK Hynix,Quanta Services,5,0.0408807357244308,ai-buildout
+SK Hynix,Eaton,5,0.07517289762854767,ai-buildout
+SK Hynix,Copper,5,0.029078500441712146,ai-buildout
+SK Hynix,Uranium,5,0.04894092884775764,ai-buildout
+SK Hynix,Tesla,4,0.07368278667071165,ai-buildout
+Micron,Samsung,2,0.16486196528056643,ai-buildout
+Micron,HBM,1,0.24834713575896172,ai-buildout
+Micron,Data center,3,0.10775509131604173,ai-buildout
+Micron,Azure,4,0.04958086773908464,ai-buildout
+Micron,AWS,4,0.06870351689079127,ai-buildout
+Micron,Google Cloud,4,0.09420361377849948,ai-buildout
+Micron,CoreWeave,4,0.08172085887874696,ai-buildout
+Micron,Oracle,4,0.066490520979783,ai-buildout
+Micron,Vertiv,4,0.08941104649022209,ai-buildout
+Micron,Nuclear power,4,0.08876754186309105,ai-buildout
+Micron,SMR,5,0.05865117000381097,ai-buildout
+Micron,Natural gas,4,0.04699702625694491,ai-buildout
+Micron,Constellation,4,0.07008360718470924,ai-buildout
+Micron,NextEra,4,0.12758614381161731,ai-buildout
+Micron,Vistra,4,0.07227743335027202,ai-buildout
+Micron,GE Vernova,4,0.0760175439196735,ai-buildout
+Micron,Electrical grid,4,0.06327509435761987,ai-buildout
+Micron,Transformer (device),5,0.11910777813208252,ai-buildout
+Micron,Quanta Services,5,0.08723175398313224,ai-buildout
+Micron,Eaton,5,0.0936804199504304,ai-buildout
+Micron,Copper,5,0.042153620699092655,ai-buildout
+Micron,Uranium,5,0.021202968818320397,ai-buildout
+Micron,Tesla,4,0.20109562444771403,ai-buildout
+Samsung,HBM,1,0.043708270717679805,ai-buildout
+Samsung,Data center,3,0.08847111226102176,ai-buildout
+Samsung,Azure,4,0.06040485624363731,ai-buildout
+Samsung,AWS,4,0.09428433448341714,ai-buildout
+Samsung,Google Cloud,4,0.05381479783946476,ai-buildout
+Samsung,CoreWeave,4,0.1298948604274203,ai-buildout
+Samsung,Oracle,4,0.11026684252939419,ai-buildout
+Samsung,Vertiv,4,0.06137664569661312,ai-buildout
+Samsung,Nuclear power,4,0.10772280815821557,ai-buildout
+Samsung,SMR,5,0.08076100001842834,ai-buildout
+Samsung,Natural gas,4,0.10988948144252243,ai-buildout
+Samsung,Constellation,4,0.11616813608626214,ai-buildout
+Samsung,NextEra,4,0.06977594096873894,ai-buildout
+Samsung,Vistra,4,0.09624284136521936,ai-buildout
+Samsung,GE Vernova,4,0.08269027748943389,ai-buildout
+Samsung,Electrical grid,4,0.07290737549075246,ai-buildout
+Samsung,Transformer (device),5,0.17537489694910416,ai-buildout
+Samsung,Quanta Services,5,0.12115700565565632,ai-buildout
+Samsung,Eaton,5,0.10867928913212539,ai-buildout
+Samsung,Copper,5,0.1666483930763223,ai-buildout
+Samsung,Uranium,5,0.08286061745015341,ai-buildout
+Samsung,Tesla,4,0.14505879140602632,ai-buildout
+HBM,Data center,2,0.19233937770800827,ai-buildout
+HBM,Azure,3,0.06683099248780174,ai-buildout
+HBM,AWS,3,0.0815455770362692,ai-buildout
+HBM,Google Cloud,3,0.07289341758481337,ai-buildout
+HBM,CoreWeave,3,0.0682050456680919,ai-buildout
+HBM,Oracle,3,0.0812560576839667,ai-buildout
+HBM,Vertiv,3,0.10616677232259965,ai-buildout
+HBM,Nuclear power,3,0.06073460974419376,ai-buildout
+HBM,SMR,4,0.01003355478961818,ai-buildout
+HBM,Natural gas,3,0.029234240573023648,ai-buildout
+HBM,Constellation,3,0.0367448067033641,ai-buildout
+HBM,NextEra,3,0.07403514862955375,ai-buildout
+HBM,Vistra,3,0.10328736087375534,ai-buildout
+HBM,GE Vernova,3,0.10651266230101462,ai-buildout
+HBM,Electrical grid,3,0.029653801393352,ai-buildout
+HBM,Transformer (device),4,0.07910736899730361,ai-buildout
+HBM,Quanta Services,4,0.03310269080695578,ai-buildout
+HBM,Eaton,4,0.08777685929042346,ai-buildout
+HBM,Copper,4,0.026079157697796018,ai-buildout
+HBM,Uranium,4,0.03545892161046987,ai-buildout
+HBM,Tesla,3,0.14693678086794765,ai-buildout
+Data center,Azure,3,0.05714126424055836,ai-buildout
+Data center,AWS,1,0.10551594904112807,ai-buildout
+Data center,Google Cloud,1,0.07517209661553206,ai-buildout
+Data center,CoreWeave,1,-0.004363834177908016,ai-buildout
+Data center,Oracle,1,0.07764894740814422,ai-buildout
+Data center,Vertiv,1,0.13472775102271367,ai-buildout
+Data center,Nuclear power,1,0.04737610274227035,ai-buildout
+Data center,SMR,2,0.07640314959971374,ai-buildout
+Data center,Natural gas,1,0.05727859833467192,ai-buildout
+Data center,Constellation,1,0.08776750027152797,ai-buildout
+Data center,NextEra,1,0.16651877763730216,ai-buildout
+Data center,Vistra,1,0.1302150555625572,ai-buildout
+Data center,GE Vernova,1,0.0595131075062467,ai-buildout
+Data center,Electrical grid,1,0.11764281484808627,ai-buildout
+Data center,Transformer (device),2,0.0940020036182635,ai-buildout
+Data center,Quanta Services,2,0.0806421006398679,ai-buildout
+Data center,Eaton,2,0.10108266947570883,ai-buildout
+Data center,Copper,2,0.09392313086383715,ai-buildout
+Data center,Uranium,2,0.13134609448125806,ai-buildout
+Data center,Tesla,3,0.03300683297478936,ai-buildout
+Azure,AWS,4,0.3028886483724711,ai-buildout
+Azure,Google Cloud,4,0.2646747699105734,ai-buildout
+Azure,CoreWeave,4,0.05201724400746459,ai-buildout
+Azure,Oracle,4,0.07861802779680062,ai-buildout
+Azure,Vertiv,4,0.1199885437520963,ai-buildout
+Azure,Nuclear power,4,0.1370319818183654,ai-buildout
+Azure,SMR,5,0.06930002685795615,ai-buildout
+Azure,Natural gas,4,0.10226028760234968,ai-buildout
+Azure,Constellation,4,0.04338686800755525,ai-buildout
+Azure,NextEra,4,0.08780926519286462,ai-buildout
+Azure,Vistra,4,0.07249573561042631,ai-buildout
+Azure,GE Vernova,4,0.017961789441564884,ai-buildout
+Azure,Electrical grid,4,0.12498450732095108,ai-buildout
+Azure,Transformer (device),5,0.0999440005742529,ai-buildout
+Azure,Quanta Services,5,0.08098613629892079,ai-buildout
+Azure,Eaton,5,0.05146478876916565,ai-buildout
+Azure,Copper,5,0.19126968774249617,ai-buildout
+Azure,Uranium,5,0.07257195308585689,ai-buildout
+Azure,Tesla,4,0.07417679755032978,ai-buildout
+AWS,Google Cloud,2,0.2464869676484889,ai-buildout
+AWS,CoreWeave,2,0.08953734855167254,ai-buildout
+AWS,Oracle,2,0.12144985894216268,ai-buildout
+AWS,Vertiv,2,0.07895342114271951,ai-buildout
+AWS,Nuclear power,2,0.09674603719302766,ai-buildout
+AWS,SMR,3,0.09343354210927399,ai-buildout
+AWS,Natural gas,2,0.07416240827954117,ai-buildout
+AWS,Constellation,2,0.052516493738344466,ai-buildout
+AWS,NextEra,2,0.08937177317170916,ai-buildout
+AWS,Vistra,2,0.09783081073087982,ai-buildout
+AWS,GE Vernova,2,-0.017726031774421207,ai-buildout
+AWS,Electrical grid,2,0.18632024550282913,ai-buildout
+AWS,Transformer (device),3,0.17103256451280668,ai-buildout
+AWS,Quanta Services,3,0.06504693414057608,ai-buildout
+AWS,Eaton,3,0.12022540302272573,ai-buildout
+AWS,Copper,3,0.19474949951604867,ai-buildout
+AWS,Uranium,3,0.0735514111274155,ai-buildout
+AWS,Tesla,4,0.061731008368167396,ai-buildout
+Google Cloud,CoreWeave,2,0.08382132863179714,ai-buildout
+Google Cloud,Oracle,2,0.0962259656833592,ai-buildout
+Google Cloud,Vertiv,2,0.06624538820745897,ai-buildout
+Google Cloud,Nuclear power,2,0.07489913763048273,ai-buildout
+Google Cloud,SMR,3,0.07471745137736935,ai-buildout
+Google Cloud,Natural gas,2,0.1606278080134365,ai-buildout
+Google Cloud,Constellation,2,0.03852707845075623,ai-buildout
+Google Cloud,NextEra,2,0.08284726759226432,ai-buildout
+Google Cloud,Vistra,2,0.06897679527355513,ai-buildout
+Google Cloud,GE Vernova,2,0.07292052595059371,ai-buildout
+Google Cloud,Electrical grid,2,0.05107970938575342,ai-buildout
+Google Cloud,Transformer (device),3,0.15603038842517208,ai-buildout
+Google Cloud,Quanta Services,3,0.04936029606258272,ai-buildout
+Google Cloud,Eaton,3,0.13934896351043644,ai-buildout
+Google Cloud,Copper,3,0.1508928244290125,ai-buildout
+Google Cloud,Uranium,3,0.07168441601134524,ai-buildout
+Google Cloud,Tesla,4,0.20530074277169055,ai-buildout
+CoreWeave,Oracle,2,0.0925788804998581,ai-buildout
+CoreWeave,Vertiv,2,0.02091162993639641,ai-buildout
+CoreWeave,Nuclear power,2,0.1707700940550033,ai-buildout
+CoreWeave,SMR,3,0.15846867060583775,ai-buildout
+CoreWeave,Natural gas,2,0.09987393687471544,ai-buildout
+CoreWeave,Constellation,2,0.22041788298029863,ai-buildout
+CoreWeave,NextEra,2,0.026247292788493415,ai-buildout
+CoreWeave,Vistra,2,0.10476458796021179,ai-buildout
+CoreWeave,GE Vernova,2,0.051324259053957516,ai-buildout
+CoreWeave,Electrical grid,2,0.19575727066784354,ai-buildout
+CoreWeave,Transformer (device),3,0.07148240832547857,ai-buildout
+CoreWeave,Quanta Services,3,0.07743477681376347,ai-buildout
+CoreWeave,Eaton,3,0.05306939489136117,ai-buildout
+CoreWeave,Copper,3,0.18461071226036993,ai-buildout
+CoreWeave,Uranium,3,0.13181285184764827,ai-buildout
+CoreWeave,Tesla,4,0.11943176424632411,ai-buildout
+Oracle,Vertiv,2,0.1274281327112861,ai-buildout
+Oracle,Nuclear power,2,0.13146681560874438,ai-buildout
+Oracle,SMR,3,0.07912780425627174,ai-buildout
+Oracle,Natural gas,2,0.1812582803984178,ai-buildout
+Oracle,Constellation,2,0.09762643048066103,ai-buildout
+Oracle,NextEra,2,0.03316711413758989,ai-buildout
+Oracle,Vistra,2,0.14934420948395802,ai-buildout
+Oracle,GE Vernova,2,0.06611215010342837,ai-buildout
+Oracle,Electrical grid,2,0.1030787306507224,ai-buildout
+Oracle,Transformer (device),3,0.08183571562429752,ai-buildout
+Oracle,Quanta Services,3,0.07095628478330529,ai-buildout
+Oracle,Eaton,3,0.08194008516337087,ai-buildout
+Oracle,Copper,3,0.14058142267395413,ai-buildout
+Oracle,Uranium,3,0.11205227342636348,ai-buildout
+Oracle,Tesla,4,0.13635856731368481,ai-buildout
+Vertiv,Nuclear power,2,0.029588925004071388,ai-buildout
+Vertiv,SMR,3,0.1084956157672786,ai-buildout
+Vertiv,Natural gas,2,0.06502568785551653,ai-buildout
+Vertiv,Constellation,2,0.15479631527989327,ai-buildout
+Vertiv,NextEra,2,0.12634955416867785,ai-buildout
+Vertiv,Vistra,2,0.1801298591245578,ai-buildout
+Vertiv,GE Vernova,2,0.1171090203468742,ai-buildout
+Vertiv,Electrical grid,2,0.05479658216723191,ai-buildout
+Vertiv,Transformer (device),3,0.05254101945778885,ai-buildout
+Vertiv,Quanta Services,3,0.06328002636912039,ai-buildout
+Vertiv,Eaton,3,0.06084992976339709,ai-buildout
+Vertiv,Copper,3,0.0460109234200033,ai-buildout
+Vertiv,Uranium,3,0.03851731259287971,ai-buildout
+Vertiv,Tesla,4,0.10553629623624969,ai-buildout
+Nuclear power,SMR,1,0.18473985121299738,ai-buildout
+Nuclear power,Natural gas,2,0.26521612108126347,ai-buildout
+Nuclear power,Constellation,1,0.07938877099935104,ai-buildout
+Nuclear power,NextEra,2,0.06868364560077357,ai-buildout
+Nuclear power,Vistra,2,0.03164026900409141,ai-buildout
+Nuclear power,GE Vernova,2,0.06354295469319378,ai-buildout
+Nuclear power,Electrical grid,2,0.22217551006655478,ai-buildout
+Nuclear power,Transformer (device),3,0.14124282713604996,ai-buildout
+Nuclear power,Quanta Services,3,0.06709004181503643,ai-buildout
+Nuclear power,Eaton,3,0.07588391550389467,ai-buildout
+Nuclear power,Copper,3,0.19109011035804357,ai-buildout
+Nuclear power,Uranium,1,0.506166116793741,ai-buildout
+Nuclear power,Tesla,4,0.13004616658098775,ai-buildout
+SMR,Natural gas,3,0.08186310127348058,ai-buildout
+SMR,Constellation,2,0.2353338684272234,ai-buildout
+SMR,NextEra,3,0.04376122500018922,ai-buildout
+SMR,Vistra,3,0.17972646545646742,ai-buildout
+SMR,GE Vernova,3,0.08068651421755657,ai-buildout
+SMR,Electrical grid,3,0.10678479941850873,ai-buildout
+SMR,Transformer (device),4,0.05610567918285461,ai-buildout
+SMR,Quanta Services,4,0.04832652259377759,ai-buildout
+SMR,Eaton,4,0.08867255597310916,ai-buildout
+SMR,Copper,4,0.07901372045178345,ai-buildout
+SMR,Uranium,2,0.09484996527741564,ai-buildout
+SMR,Tesla,5,0.09766700976520235,ai-buildout
+Natural gas,Constellation,2,0.0667686220748111,ai-buildout
+Natural gas,NextEra,2,0.06826551718431219,ai-buildout
+Natural gas,Vistra,2,0.006858562949379413,ai-buildout
+Natural gas,GE Vernova,2,0.16389433474560955,ai-buildout
+Natural gas,Electrical grid,2,0.20717979234170575,ai-buildout
+Natural gas,Transformer (device),3,0.20928200013339215,ai-buildout
+Natural gas,Quanta Services,3,0.08649158388782252,ai-buildout
+Natural gas,Eaton,3,0.08569668288518477,ai-buildout
+Natural gas,Copper,3,0.26645345964695577,ai-buildout
+Natural gas,Uranium,3,0.23464303086263646,ai-buildout
+Natural gas,Tesla,4,0.09147349322289623,ai-buildout
+Constellation,NextEra,2,0.12609100514423774,ai-buildout
+Constellation,Vistra,2,0.30817306026285535,ai-buildout
+Constellation,GE Vernova,2,0.08406354401215864,ai-buildout
+Constellation,Electrical grid,2,0.056739385571896735,ai-buildout
+Constellation,Transformer (device),3,0.042305233524040815,ai-buildout
+Constellation,Quanta Services,3,0.10847308145723683,ai-buildout
+Constellation,Eaton,3,0.034930546230720436,ai-buildout
+Constellation,Copper,3,0.04005030687060922,ai-buildout
+Constellation,Uranium,2,0.08367562096963502,ai-buildout
+Constellation,Tesla,4,0.09881890210954043,ai-buildout
+NextEra,Vistra,2,0.06851632128204345,ai-buildout
+NextEra,GE Vernova,2,0.07678787432317816,ai-buildout
+NextEra,Electrical grid,2,0.08473594450646901,ai-buildout
+NextEra,Transformer (device),3,0.07485793127947549,ai-buildout
+NextEra,Quanta Services,3,0.06377031545220314,ai-buildout
+NextEra,Eaton,3,0.12062639048019366,ai-buildout
+NextEra,Copper,3,0.05745830220467426,ai-buildout
+NextEra,Uranium,3,0.08252097034142657,ai-buildout
+NextEra,Tesla,4,0.08163462319018866,ai-buildout
+Vistra,GE Vernova,2,0.14550942915936,ai-buildout
+Vistra,Electrical grid,2,0.09601345595421616,ai-buildout
+Vistra,Transformer (device),3,0.027852833135911463,ai-buildout
+Vistra,Quanta Services,3,0.09458520144147488,ai-buildout
+Vistra,Eaton,3,0.030124518176087803,ai-buildout
+Vistra,Copper,3,0.0231972247270211,ai-buildout
+Vistra,Uranium,3,0.0329551099976758,ai-buildout
+Vistra,Tesla,4,0.09487706623558992,ai-buildout
+GE Vernova,Electrical grid,2,0.08828542242888648,ai-buildout
+GE Vernova,Transformer (device),3,0.1271294218916565,ai-buildout
+GE Vernova,Quanta Services,3,0.06796342973101717,ai-buildout
+GE Vernova,Eaton,3,0.014561342477677711,ai-buildout
+GE Vernova,Copper,3,0.06654109363748142,ai-buildout
+GE Vernova,Uranium,3,0.043237653370930496,ai-buildout
+GE Vernova,Tesla,4,0.1119631347341065,ai-buildout
+Electrical grid,Transformer (device),1,0.27059187096111803,ai-buildout
+Electrical grid,Quanta Services,1,0.05570045195156186,ai-buildout
+Electrical grid,Eaton,1,0.08402950862738079,ai-buildout
+Electrical grid,Copper,1,0.287734916894338,ai-buildout
+Electrical grid,Uranium,3,0.16041802216847711,ai-buildout
+Electrical grid,Tesla,4,0.08801789357848684,ai-buildout
+Transformer (device),Quanta Services,2,0.09268767984178317,ai-buildout
+Transformer (device),Eaton,2,0.09574876534969229,ai-buildout
+Transformer (device),Copper,2,0.34800221503642953,ai-buildout
+Transformer (device),Uranium,4,0.11391890462356238,ai-buildout
+Transformer (device),Tesla,5,0.1067201619630967,ai-buildout
+Quanta Services,Eaton,2,0.11724528042843488,ai-buildout
+Quanta Services,Copper,2,0.10393146049922783,ai-buildout
+Quanta Services,Uranium,4,0.05692641535115925,ai-buildout
+Quanta Services,Tesla,5,0.009896019803876483,ai-buildout
+Eaton,Copper,2,0.14407810229682605,ai-buildout
+Eaton,Uranium,4,0.07182085941823627,ai-buildout
+Eaton,Tesla,5,0.07289564414916797,ai-buildout
+Copper,Uranium,4,0.15730635448485905,ai-buildout
+Copper,Tesla,5,0.08458773264054349,ai-buildout
+Uranium,Tesla,5,0.0644790007249566,ai-buildout
+Semaglutide,Tirzepatide,2,0.1990810402632217,glp1
+Semaglutide,GLP-1,1,0.24307572911081746,glp1
+Semaglutide,Novo Nordisk,1,0.18462218165223773,glp1
+Semaglutide,Eli Lilly,3,0.18496659695338574,glp1
+Semaglutide,Obesity,1,0.09884066905297877,glp1
+Semaglutide,Weight loss,1,0.0677463739340239,glp1
+Semaglutide,Bariatric surgery,2,0.03658753060541197,glp1
+Semaglutide,Compounding,1,0.07086971242976307,glp1
+Semaglutide,Catalent,2,0.02462285587119433,glp1
+Semaglutide,WeightWatchers,2,0.008140710499097398,glp1
+Semaglutide,PepsiCo,2,0.0864772657932582,glp1
+Semaglutide,Mondelez,2,0.088966965882545,glp1
+Semaglutide,DaVita,2,0.07550896760915891,glp1
+Semaglutide,Hims & Hers,2,0.05119819259767205,glp1
+Tirzepatide,GLP-1,1,0.11545028824238708,glp1
+Tirzepatide,Novo Nordisk,3,0.026366727660896254,glp1
+Tirzepatide,Eli Lilly,1,0.025108144113618735,glp1
+Tirzepatide,Obesity,3,0.0870200548793718,glp1
+Tirzepatide,Weight loss,3,-0.0005205002886828319,glp1
+Tirzepatide,Bariatric surgery,2,0.014064128171107101,glp1
+Tirzepatide,Compounding,3,0.060123277886087755,glp1
+Tirzepatide,Catalent,4,0.05359164892253551,glp1
+Tirzepatide,WeightWatchers,2,0.03515122520299173,glp1
+Tirzepatide,PepsiCo,2,0.08413314664057088,glp1
+Tirzepatide,Mondelez,2,0.09920528990722773,glp1
+Tirzepatide,DaVita,2,0.07587819563875331,glp1
+Tirzepatide,Hims & Hers,4,0.06094851106000307,glp1
+GLP-1,Novo Nordisk,2,0.051391793721104556,glp1
+GLP-1,Eli Lilly,2,0.045171016230047135,glp1
+GLP-1,Obesity,2,0.01733470059238759,glp1
+GLP-1,Weight loss,2,0.062342572941132116,glp1
+GLP-1,Bariatric surgery,1,0.0384351076673688,glp1
+GLP-1,Compounding,2,0.07959294625181637,glp1
+GLP-1,Catalent,3,0.050908992257358655,glp1
+GLP-1,WeightWatchers,1,0.018158974432010887,glp1
+GLP-1,PepsiCo,1,0.057504901933251425,glp1
+GLP-1,Mondelez,1,0.07418694370650702,glp1
+GLP-1,DaVita,1,0.08607544167621498,glp1
+GLP-1,Hims & Hers,3,0.08530759143737747,glp1
+Novo Nordisk,Eli Lilly,4,0.10539435388543492,glp1
+Novo Nordisk,Obesity,2,0.05277916979701841,glp1
+Novo Nordisk,Weight loss,2,0.05858853330307349,glp1
+Novo Nordisk,Bariatric surgery,3,0.2147560415634707,glp1
+Novo Nordisk,Compounding,2,0.059832762742774555,glp1
+Novo Nordisk,Catalent,1,0.11288250737632478,glp1
+Novo Nordisk,WeightWatchers,3,0.07288387605491163,glp1
+Novo Nordisk,PepsiCo,3,0.047104485038301586,glp1
+Novo Nordisk,Mondelez,3,0.08040272291783106,glp1
+Novo Nordisk,DaVita,3,0.1315698785040565,glp1
+Novo Nordisk,Hims & Hers,3,0.05474612165287095,glp1
+Eli Lilly,Obesity,4,0.2103646878555624,glp1
+Eli Lilly,Weight loss,4,0.09909264908247722,glp1
+Eli Lilly,Bariatric surgery,3,0.08189592983548902,glp1
+Eli Lilly,Compounding,4,0.065271692046833,glp1
+Eli Lilly,Catalent,5,0.08361017721382832,glp1
+Eli Lilly,WeightWatchers,3,0.024088969356059548,glp1
+Eli Lilly,PepsiCo,3,0.07252241186018331,glp1
+Eli Lilly,Mondelez,3,0.0750087200994738,glp1
+Eli Lilly,DaVita,3,0.026985399002236957,glp1
+Eli Lilly,Hims & Hers,5,0.030426946555183274,glp1
+Obesity,Weight loss,2,0.10482526153055008,glp1
+Obesity,Bariatric surgery,3,0.08094118301368505,glp1
+Obesity,Compounding,2,0.07512545767926157,glp1
+Obesity,Catalent,3,0.03490919808358026,glp1
+Obesity,WeightWatchers,3,0.054614219820327596,glp1
+Obesity,PepsiCo,3,0.15011315968599043,glp1
+Obesity,Mondelez,3,0.1536409873733977,glp1
+Obesity,DaVita,3,0.06599191150528343,glp1
+Obesity,Hims & Hers,3,0.1841109213476045,glp1
+Weight loss,Bariatric surgery,3,0.0733364397737112,glp1
+Weight loss,Compounding,2,0.07227387450549987,glp1
+Weight loss,Catalent,3,0.0695913008722804,glp1
+Weight loss,WeightWatchers,3,0.05399107005277206,glp1
+Weight loss,PepsiCo,3,0.14604983729675095,glp1
+Weight loss,Mondelez,3,0.0917421474705409,glp1
+Weight loss,DaVita,3,0.07013324520039466,glp1
+Weight loss,Hims & Hers,3,0.13796474464504313,glp1
+Bariatric surgery,Compounding,3,0.03824624709363588,glp1
+Bariatric surgery,Catalent,4,0.07912795479264514,glp1
+Bariatric surgery,WeightWatchers,2,0.06950976685742402,glp1
+Bariatric surgery,PepsiCo,2,0.07790752905105397,glp1
+Bariatric surgery,Mondelez,2,0.13613681182971052,glp1
+Bariatric surgery,DaVita,2,0.0766702963043631,glp1
+Bariatric surgery,Hims & Hers,4,0.0695522420266641,glp1
+Compounding,Catalent,3,0.047976178738027536,glp1
+Compounding,WeightWatchers,3,0.06629222898810641,glp1
+Compounding,PepsiCo,3,0.07160692459922084,glp1
+Compounding,Mondelez,3,0.12087780838144183,glp1
+Compounding,DaVita,3,0.04500896949325618,glp1
+Compounding,Hims & Hers,1,0.08386584854854451,glp1
+Catalent,WeightWatchers,4,0.07760248427784464,glp1
+Catalent,PepsiCo,4,0.06874261399218005,glp1
+Catalent,Mondelez,4,0.11687403347007704,glp1
+Catalent,DaVita,4,0.08251698624327565,glp1
+Catalent,Hims & Hers,4,0.11167636940570076,glp1
+WeightWatchers,PepsiCo,2,0.08990554884382575,glp1
+WeightWatchers,Mondelez,2,0.10483125457652154,glp1
+WeightWatchers,DaVita,2,0.049177225695788,glp1
+WeightWatchers,Hims & Hers,4,0.06314214501982222,glp1
+PepsiCo,Mondelez,2,0.325693224911723,glp1
+PepsiCo,DaVita,2,0.024416362677383466,glp1
+PepsiCo,Hims & Hers,4,0.1071818099255061,glp1
+Mondelez,DaVita,2,0.035035127856603364,glp1
+Mondelez,Hims & Hers,4,0.08374545244474967,glp1
+DaVita,Hims & Hers,4,0.033628861165437646,glp1
+EV,Tesla,1,0.10492149259038146,ev-battery
+EV,BYD,1,0.06549922514696657,ev-battery
+EV,Rivian,1,0.08074646921222996,ev-battery
+EV,Lucid,1,0.06642402069296324,ev-battery
+EV,Li-ion battery,1,0.2879375838509471,ev-battery
+EV,Solid-state battery,2,0.02004562043697517,ev-battery
+EV,CATL,2,0.0700858662816575,ev-battery
+EV,Panasonic,2,0.04132810419686065,ev-battery
+EV,LG Energy Solution,2,0.0839005555702588,ev-battery
+EV,Lithium,2,0.09473652717044106,ev-battery
+EV,Cobalt,2,0.10879921641621028,ev-battery
+EV,Nickel,2,0.12446729898517542,ev-battery
+EV,Graphite,2,0.202262964919885,ev-battery
+EV,Albemarle,3,0.0695999713105814,ev-battery
+EV,Charging station,1,0.18864696876374532,ev-battery
+Tesla,BYD,2,0.04296438919288744,ev-battery
+Tesla,Rivian,2,0.12503653397431944,ev-battery
+Tesla,Lucid,2,0.1004591991203681,ev-battery
+Tesla,Li-ion battery,1,0.12769428865884902,ev-battery
+Tesla,Solid-state battery,2,0.13265970365916874,ev-battery
+Tesla,CATL,2,0.061996912017391166,ev-battery
+Tesla,Panasonic,2,0.0267990737118008,ev-battery
+Tesla,LG Energy Solution,2,0.07267204746174023,ev-battery
+Tesla,Lithium,2,0.07361100745028792,ev-battery
+Tesla,Cobalt,2,0.12961530135688784,ev-battery
+Tesla,Nickel,2,0.0934351277145025,ev-battery
+Tesla,Graphite,2,0.04620558685272064,ev-battery
+Tesla,Albemarle,3,0.08887260552983829,ev-battery
+Tesla,Charging station,2,0.046929663093113985,ev-battery
+BYD,Rivian,2,0.02736037794769716,ev-battery
+BYD,Lucid,2,0.07696170497175574,ev-battery
+BYD,Li-ion battery,1,0.0946373844882162,ev-battery
+BYD,Solid-state battery,2,0.039056312569821484,ev-battery
+BYD,CATL,2,0.05188218141689386,ev-battery
+BYD,Panasonic,2,0.10702800495093626,ev-battery
+BYD,LG Energy Solution,2,0.0819692352864843,ev-battery
+BYD,Lithium,2,0.06806304040975564,ev-battery
+BYD,Cobalt,2,0.09188286119003884,ev-battery
+BYD,Nickel,2,0.06725133233759727,ev-battery
+BYD,Graphite,2,0.11012018425502546,ev-battery
+BYD,Albemarle,3,0.10752079877656298,ev-battery
+BYD,Charging station,2,0.06900990817715066,ev-battery
+Rivian,Lucid,2,0.07945450725001817,ev-battery
+Rivian,Li-ion battery,2,0.0883047559379849,ev-battery
+Rivian,Solid-state battery,3,0.08755353360298886,ev-battery
+Rivian,CATL,3,0.07871371331662289,ev-battery
+Rivian,Panasonic,3,0.09702029297508288,ev-battery
+Rivian,LG Energy Solution,3,0.0544047795497989,ev-battery
+Rivian,Lithium,3,0.07699319002666836,ev-battery
+Rivian,Cobalt,3,0.16453167072297623,ev-battery
+Rivian,Nickel,3,0.13488906006672718,ev-battery
+Rivian,Graphite,3,0.08257068055453749,ev-battery
+Rivian,Albemarle,4,0.04880798863897346,ev-battery
+Rivian,Charging station,2,0.08447397797885604,ev-battery
+Lucid,Li-ion battery,2,0.05302316815376012,ev-battery
+Lucid,Solid-state battery,3,0.15158448621457338,ev-battery
+Lucid,CATL,3,0.08301507293772821,ev-battery
+Lucid,Panasonic,3,-0.0010715308706411668,ev-battery
+Lucid,LG Energy Solution,3,0.08608506248529191,ev-battery
+Lucid,Lithium,3,0.11921936273455881,ev-battery
+Lucid,Cobalt,3,0.03800806069634592,ev-battery
+Lucid,Nickel,3,0.06420208184113774,ev-battery
+Lucid,Graphite,3,0.07449513885296476,ev-battery
+Lucid,Albemarle,4,0.04887321200526904,ev-battery
+Lucid,Charging station,2,0.029026022147389904,ev-battery
+Li-ion battery,Solid-state battery,1,0.1324223885004921,ev-battery
+Li-ion battery,CATL,1,0.08627087846793734,ev-battery
+Li-ion battery,Panasonic,1,0.08178299795238539,ev-battery
+Li-ion battery,LG Energy Solution,1,0.08675702375616018,ev-battery
+Li-ion battery,Lithium,1,0.28270272288028986,ev-battery
+Li-ion battery,Cobalt,1,0.1779496750987689,ev-battery
+Li-ion battery,Nickel,1,0.22612698479425342,ev-battery
+Li-ion battery,Graphite,1,0.3080578091878687,ev-battery
+Li-ion battery,Albemarle,2,0.11160055380017664,ev-battery
+Li-ion battery,Charging station,2,0.1392548535567733,ev-battery
+Solid-state battery,CATL,2,0.0621831823355381,ev-battery
+Solid-state battery,Panasonic,2,0.04618623264880698,ev-battery
+Solid-state battery,LG Energy Solution,2,0.11108811217052598,ev-battery
+Solid-state battery,Lithium,2,0.02715907001627697,ev-battery
+Solid-state battery,Cobalt,2,0.0464381021584769,ev-battery
+Solid-state battery,Nickel,2,0.008632880052552258,ev-battery
+Solid-state battery,Graphite,2,0.05378558468484938,ev-battery
+Solid-state battery,Albemarle,3,0.1125665611467741,ev-battery
+Solid-state battery,Charging station,3,0.02312540757817718,ev-battery
+CATL,Panasonic,2,0.11141785611140026,ev-battery
+CATL,LG Energy Solution,2,0.07376117192202575,ev-battery
+CATL,Lithium,2,0.061788760775668666,ev-battery
+CATL,Cobalt,2,0.03197906888473205,ev-battery
+CATL,Nickel,2,0.022746115661131706,ev-battery
+CATL,Graphite,2,0.0918073199110011,ev-battery
+CATL,Albemarle,3,0.024539892717230977,ev-battery
+CATL,Charging station,3,0.045551672934970505,ev-battery
+Panasonic,LG Energy Solution,2,0.06843603098492378,ev-battery
+Panasonic,Lithium,2,-0.008223305603081443,ev-battery
+Panasonic,Cobalt,2,0.015059662366269058,ev-battery
+Panasonic,Nickel,2,0.052168882178810265,ev-battery
+Panasonic,Graphite,2,0.04276510711390332,ev-battery
+Panasonic,Albemarle,3,0.07173788223375811,ev-battery
+Panasonic,Charging station,3,0.07824090808129225,ev-battery
+LG Energy Solution,Lithium,2,0.12694882757198606,ev-battery
+LG Energy Solution,Cobalt,2,0.0977449145236287,ev-battery
+LG Energy Solution,Nickel,2,0.11388437299702517,ev-battery
+LG Energy Solution,Graphite,2,0.10241197549258597,ev-battery
+LG Energy Solution,Albemarle,3,0.040043954931498,ev-battery
+LG Energy Solution,Charging station,3,0.07302208924202004,ev-battery
+Lithium,Cobalt,2,0.10517671087057422,ev-battery
+Lithium,Nickel,2,0.2365138049239399,ev-battery
+Lithium,Graphite,2,0.14876395808955123,ev-battery
+Lithium,Albemarle,1,0.0844907010343704,ev-battery
+Lithium,Charging station,3,0.0659754420255008,ev-battery
+Cobalt,Nickel,2,0.22581140820398451,ev-battery
+Cobalt,Graphite,2,0.1342929673545428,ev-battery
+Cobalt,Albemarle,3,0.052558308413538556,ev-battery
+Cobalt,Charging station,3,0.08011749437791384,ev-battery
+Nickel,Graphite,2,0.3459960338452061,ev-battery
+Nickel,Albemarle,3,0.051253839588652164,ev-battery
+Nickel,Charging station,3,0.06065802626182135,ev-battery
+Graphite,Albemarle,3,0.056219456957187136,ev-battery
+Graphite,Charging station,3,0.1021452810997059,ev-battery
+Albemarle,Charging station,4,0.03807581141428669,ev-battery
+COVID-19 pandemic,Coronavirus,1,0.02224262033569335,covid
+COVID-19 pandemic,Vaccine,1,0.08040443966343669,covid
+COVID-19 pandemic,mRNA vaccine,2,0.19113136746500506,covid
+COVID-19 pandemic,Pfizer,3,0.050545067356591075,covid
+COVID-19 pandemic,BioNTech,3,0.06117064237328416,covid
+COVID-19 pandemic,Moderna,3,0.23198456721646116,covid
+COVID-19 pandemic,AstraZeneca,2,0.21376772621804802,covid
+COVID-19 pandemic,Remdesivir,1,0.15326416515018307,covid
+COVID-19 pandemic,Gilead,2,0.2836904778000764,covid
+COVID-19 pandemic,Lockdown,1,0.02249525193516599,covid
+COVID-19 pandemic,Zoom,2,0.16584321780870828,covid
+COVID-19 pandemic,Peloton,2,0.06762537784704302,covid
+COVID-19 pandemic,Cruise ship,1,0.08198642072836763,covid
+COVID-19 pandemic,Carnival,2,0.05917018575842613,covid
+COVID-19 pandemic,Airline,1,0.1918563965668562,covid
+COVID-19 pandemic,Boeing,2,0.10838026583712235,covid
+COVID-19 pandemic,PPE,1,0.1379891690591817,covid
+Coronavirus,Vaccine,2,0.06787516611309552,covid
+Coronavirus,mRNA vaccine,3,0.10610823055728194,covid
+Coronavirus,Pfizer,4,0.1762260536941809,covid
+Coronavirus,BioNTech,4,0.13152096334139984,covid
+Coronavirus,Moderna,4,0.14448519553324418,covid
+Coronavirus,AstraZeneca,3,0.08139598645782356,covid
+Coronavirus,Remdesivir,2,0.6145323510237328,covid
+Coronavirus,Gilead,3,0.22118457044763923,covid
+Coronavirus,Lockdown,2,0.09256386722450258,covid
+Coronavirus,Zoom,3,0.09947848734318317,covid
+Coronavirus,Peloton,3,0.059474855214948205,covid
+Coronavirus,Cruise ship,2,0.3126684226136485,covid
+Coronavirus,Carnival,3,0.3174017666600406,covid
+Coronavirus,Airline,2,0.2677532329484526,covid
+Coronavirus,Boeing,3,0.19397871327750577,covid
+Coronavirus,PPE,2,0.11793572857780951,covid
+Vaccine,mRNA vaccine,1,0.11016048209528079,covid
+Vaccine,Pfizer,2,0.19161474808037698,covid
+Vaccine,BioNTech,2,0.2267992061618717,covid
+Vaccine,Moderna,2,0.17507037172265774,covid
+Vaccine,AstraZeneca,1,0.0897599349407213,covid
+Vaccine,Remdesivir,2,0.034161546734446276,covid
+Vaccine,Gilead,3,0.12131987365995686,covid
+Vaccine,Lockdown,2,0.1470089090808832,covid
+Vaccine,Zoom,3,0.2680031116716288,covid
+Vaccine,Peloton,3,0.1659618329919723,covid
+Vaccine,Cruise ship,2,0.2900491370285391,covid
+Vaccine,Carnival,3,0.20117893297162498,covid
+Vaccine,Airline,2,0.26227332435044654,covid
+Vaccine,Boeing,3,0.13657791111912831,covid
+Vaccine,PPE,2,0.29629103298278014,covid
+mRNA vaccine,Pfizer,1,0.31338085875061217,covid
+mRNA vaccine,BioNTech,1,0.31828269772892126,covid
+mRNA vaccine,Moderna,1,0.44429082629699795,covid
+mRNA vaccine,AstraZeneca,2,0.12623544526629488,covid
+mRNA vaccine,Remdesivir,3,0.11407535244729068,covid
+mRNA vaccine,Gilead,4,0.14408513418642138,covid
+mRNA vaccine,Lockdown,3,0.1969981701848082,covid
+mRNA vaccine,Zoom,4,0.07604891730546971,covid
+mRNA vaccine,Peloton,4,0.10185951291135001,covid
+mRNA vaccine,Cruise ship,3,0.03357615772822234,covid
+mRNA vaccine,Carnival,4,0.05077618505529927,covid
+mRNA vaccine,Airline,3,0.06230514603876464,covid
+mRNA vaccine,Boeing,4,0.006194860841729848,covid
+mRNA vaccine,PPE,3,0.062064703924332776,covid
+Pfizer,BioNTech,2,0.8295298034152687,covid
+Pfizer,Moderna,2,0.35341517683046586,covid
+Pfizer,AstraZeneca,3,0.17636226043754033,covid
+Pfizer,Remdesivir,4,0.0319751870541722,covid
+Pfizer,Gilead,5,0.07832890128332178,covid
+Pfizer,Lockdown,4,0.10641625117471261,covid
+Pfizer,Zoom,5,0.03735127450564028,covid
+Pfizer,Peloton,5,0.0028006913338006075,covid
+Pfizer,Cruise ship,4,0.1082252451342444,covid
+Pfizer,Carnival,5,0.03719074721563975,covid
+Pfizer,Airline,4,0.12217276640112851,covid
+Pfizer,Boeing,5,0.1118185427394298,covid
+Pfizer,PPE,4,0.055388044319966634,covid
+BioNTech,Moderna,2,0.557076909273033,covid
+BioNTech,AstraZeneca,3,0.21936643619116417,covid
+BioNTech,Remdesivir,4,0.09669709194441362,covid
+BioNTech,Gilead,5,0.14076881519837733,covid
+BioNTech,Lockdown,4,0.13081013602043468,covid
+BioNTech,Zoom,5,0.033767010415141234,covid
+BioNTech,Peloton,5,-0.0028931908866604546,covid
+BioNTech,Cruise ship,4,0.053651134054444244,covid
+BioNTech,Carnival,5,0.055683374847442554,covid
+BioNTech,Airline,4,0.04381693782311842,covid
+BioNTech,Boeing,5,0.008698881998856966,covid
+BioNTech,PPE,4,0.01326580443934714,covid
+Moderna,AstraZeneca,3,0.12429469777304247,covid
+Moderna,Remdesivir,4,0.23822158535334653,covid
+Moderna,Gilead,5,0.28696375874700486,covid
+Moderna,Lockdown,4,0.1461674238900682,covid
+Moderna,Zoom,5,0.2303211043924981,covid
+Moderna,Peloton,5,0.016840664866369044,covid
+Moderna,Cruise ship,4,0.028534653534980425,covid
+Moderna,Carnival,5,0.062177507537083246,covid
+Moderna,Airline,4,0.05807757787594851,covid
+Moderna,Boeing,5,-0.009206370185682718,covid
+Moderna,PPE,4,0.11884281463279228,covid
+AstraZeneca,Remdesivir,3,0.12341844915052666,covid
+AstraZeneca,Gilead,4,0.08646158719302308,covid
+AstraZeneca,Lockdown,3,0.049303794391770364,covid
+AstraZeneca,Zoom,4,0.018296612018402842,covid
+AstraZeneca,Peloton,4,0.05099488160807708,covid
+AstraZeneca,Cruise ship,3,0.20274331208288254,covid
+AstraZeneca,Carnival,4,0.09184282077296257,covid
+AstraZeneca,Airline,3,0.2258867995584928,covid
+AstraZeneca,Boeing,4,0.17549162330001306,covid
+AstraZeneca,PPE,3,0.10576854979470654,covid
+Remdesivir,Gilead,1,0.5740016506066774,covid
+Remdesivir,Lockdown,2,0.13802303557583342,covid
+Remdesivir,Zoom,3,0.12058454609387137,covid
+Remdesivir,Peloton,3,0.046142304455898515,covid
+Remdesivir,Cruise ship,2,0.045229166340832884,covid
+Remdesivir,Carnival,3,0.12275796901583848,covid
+Remdesivir,Airline,2,0.007721661247940504,covid
+Remdesivir,Boeing,3,-0.016812630362034082,covid
+Remdesivir,PPE,2,0.05067792950568975,covid
+Gilead,Lockdown,3,0.2283494844334484,covid
+Gilead,Zoom,4,0.2064012327912719,covid
+Gilead,Peloton,4,0.06104182816182535,covid
+Gilead,Cruise ship,3,0.1153862205584786,covid
+Gilead,Carnival,4,0.11636195767245817,covid
+Gilead,Airline,3,0.0698431779900516,covid
+Gilead,Boeing,4,0.05446281904661082,covid
+Gilead,PPE,3,0.14737227353390012,covid
+Lockdown,Zoom,1,0.4520208191648413,covid
+Lockdown,Peloton,1,0.06825372873248234,covid
+Lockdown,Cruise ship,2,0.16618844560935742,covid
+Lockdown,Carnival,3,0.21353694448351604,covid
+Lockdown,Airline,2,0.14793160042787484,covid
+Lockdown,Boeing,3,0.0018305247692751627,covid
+Lockdown,PPE,2,0.27654286677033346,covid
+Zoom,Peloton,2,0.20484799613479357,covid
+Zoom,Cruise ship,3,0.20042356845790896,covid
+Zoom,Carnival,4,0.19802510460804146,covid
+Zoom,Airline,3,0.19476113716972804,covid
+Zoom,Boeing,4,0.16677199563691955,covid
+Zoom,PPE,3,0.4951251865609507,covid
+Peloton,Cruise ship,3,0.1730770583260369,covid
+Peloton,Carnival,4,0.07473688013009737,covid
+Peloton,Airline,3,0.17135184307707135,covid
+Peloton,Boeing,4,0.5545953053396628,covid
+Peloton,PPE,3,0.16348514421223292,covid
+Cruise ship,Carnival,1,0.5946273484973943,covid
+Cruise ship,Airline,2,0.7563129451021965,covid
+Cruise ship,Boeing,3,0.5487310899337531,covid
+Cruise ship,PPE,2,0.5832299960874521,covid
+Carnival,Airline,3,0.4171201821529499,covid
+Carnival,Boeing,4,0.3069745921040595,covid
+Carnival,PPE,3,0.3782887849344284,covid
+Airline,Boeing,1,0.6260048839199474,covid
+Airline,PPE,2,0.577956413199599,covid
+Boeing,PPE,3,0.48106831892092666,covid
