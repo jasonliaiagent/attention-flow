@@ -13,6 +13,17 @@ ChatGPT ──► Nvidia ──► TSMC ──► ASML
 
 The hypothesis: attention is not instantaneous. It cascades along real economic links with lags of **days to weeks**, and those lags are measurable — and eventually, forecastable.
 
+**Findings at a glance** (each phase's full evidence below):
+
+| # | question | verdict |
+|---|---|---|
+| 0–1 | Does attention have economic-graph structure? | **Yes** — co-movement decays with graph distance, 4 themes, 2 eras (perm. p = 0.00015) |
+| 1b | Does it flow downstream along edges? | **No** — undirected (2 independent methods) |
+| 1b | Is it in news coverage too? | **No** — demand-side only (Wikipedia yes, news volume reverses) |
+| 2 | Is attention forecastable? | **Yes** — out-of-sample IC ≈ 0.49 at 7 days |
+| 2 | Does the graph improve the forecast? | **No** — ties its own no-graph ablation, even burst-conditioned |
+| 3 | Does attention lead capital flow? | **Volume yes** (t ≈ 4.8; GNN forecast t ≈ 3.5) — **returns no** (t ≈ 1.4, gross L/S Sharpe 0.30) |
+
 ## Phase 0 — falsify it first (this repo, today)
 
 Before building any neural network, Phase 0 asks the question the whole project depends on:
@@ -116,6 +127,26 @@ This is the project's third propagation negative, and the picture is now coheren
 
 What could still rescue graph forecasting, in order of promise: shorter horizons (1–2 days, where Phase 0's lag histogram put most of the mass), learned edges (infer the graph from attention data instead of drawing it from priors), and entity-resolved news events (GDELT GKG) as the shock source. That list is Phase 2b.
 
+## Phase 3 — the capital-flow link: attention predicts who will be busy, not who will get rich
+
+The question the project is named for. ~39 entities map to liquid tickers (NVDA, TSM, LLY, NVO, VST, CEG, TSLA...; concepts and private companies excluded). Each week, entities are ranked by attention signal; the test is whether that ranking predicts **next week's** market behavior (weekly cross-sectional Spearman ICs, Fama-MacBeth style, 338 weeks spanning 2020–2026):
+
+| signal → outcome (next week) | mean IC | t-stat |
+|---|---|---|
+| attention → **abnormal volume** | **+0.059** | **+4.82** |
+| GNN attention forecast → abnormal volume *(out-of-sample weeks)* | **+0.104** | **+3.46** |
+| attention → return | +0.018 | +1.36 |
+| attention (reversal-controlled) → return | +0.010 | +0.78 |
+| momentum → return (baseline) | +0.007 | +0.55 |
+
+![capital flow](results/phase3_capitalflow.png)
+
+**Attention leads trading activity, decisively.** Entities with elevated attention this week see abnormally high trading volume next week (t ≈ 4.8, 201/338 weeks positive). Better: the Phase-2 GNN's *forecast* of attention — made before the week begins, on test data it never trained on — predicts abnormal volume at IC +0.104. The pipeline works end to end: measurable attention → forecastable attention → forecastable market activity.
+
+**Attention does not (exploitably) lead prices.** The return IC is positive but insignificant, shrinks under a reversal control, and the tercile long-short earns +9.2%/yr gross (Sharpe 0.30) — before costs that weekly turnover would consume. On ~39 of the most-watched securities on earth, prices absorb attention faster than a weekly signal can trade it. That is the efficient-markets result a careful study *should* find in large caps, and it echoes where this project started: the same lesson as the weather-market bots — public signals on liquid instruments get priced before you arrive.
+
+So the capital-flow chain resolves as: **attention → activity: yes. Activity → excess returns: not at this size and speed.** The honest asterisks: gross of costs, a small universe of mega-caps, and the classic attention-literature result (Da et al.) that retail attention effects concentrate in *small* illiquid names — which is exactly where a Phase 4 would look.
+
 ## Run it yourself
 
 ```bash
@@ -124,6 +155,7 @@ python -m venv .venv && .venv/bin/pip install -r requirements.txt
 .venv/bin/python scripts/run_phase1.py   # four themes + permutation null
 .venv/bin/python scripts/run_phase1b.py  # transfer-entropy direction + GDELT
 .venv/bin/python scripts/run_phase2.py   # train the GNN + ablation + baselines
+.venv/bin/python scripts/run_phase3.py   # the attention -> capital-flow test
 ```
 
 No API keys, ~10 minutes on first run (Wikimedia pageviews are free; responses are cached in `data/raw/`, and this repo ships the cache so reruns are instant). Outputs land in `results/`.
@@ -142,7 +174,8 @@ No API keys, ~10 minutes on first run (Wikimedia pageviews are free; responses a
 - [x] **Phase 1b — direction & proxies**: transfer entropy + GDELT news volume. *(Direction: absent, two methods agree. GDELT: decay reverses — the result is demand-side. Both reported in full above.)*
 - [x] **Phase 2 — model it**: temporal GNN vs its own no-graph ablation. *(Attention is forecastable: IC ≈ 0.49 out-of-sample. The static graph adds nothing at 7 days — even burst-conditioned. Both reported in full above.)*
 - [ ] **Phase 2b — where graph forecasting could still work**: 1–2 day horizons; learned/inferred edges instead of hand-drawn ones; GDELT GKG entity-level events as shocks; contrastive "attention episode" embeddings.
-- [ ] **Phase 3 — the capital-flow link**: does *forecasted attention* (IC 0.49 is plenty to work with) lead returns/volume beyond momentum baselines (Cohen & Frazzini's *Economic Links and Predictable Returns* is the benchmark to beat)?
+- [x] **Phase 3 — the capital-flow link**: attention (and the GNN's forecast of it) strongly leads next-week *trading volume*; it does not exploitably lead *returns* in this mega-cap universe. The full arc — structure → forecast → market impact — is measured and reported above.
+- [ ] **Phase 4 (open)** — where the literature says return effects live: small/illiquid names, entity-level news events (GDELT GKG), 1–2 day horizons, learned graph edges.
 
 ## Why this design
 
