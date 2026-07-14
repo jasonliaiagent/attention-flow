@@ -94,6 +94,28 @@ News-volume co-movement *rises* with graph distance (0.15 at 1 hop → 0.30 at 5
 
 Either way: the Phase 1 result stands for Wikipedia pageviews and is now precisely scoped rather than overclaimed.
 
+## Phase 2 — the deep-learning test: is attention forecastable, and does the graph help?
+
+Phase 2 trains **AttentionDiffusionNet** — a GRU temporal encoder feeding undirected graph-attention layers (undirected because Phase 1b said so) — to predict every entity's *next-week* attention shock, jointly over all four theme graphs. Strict walk-forward splits (train 70% / val 10% / test 20% by date). The experiment is the ablation: the identical architecture with the adjacency replaced by the identity matrix, so the graph's contribution is isolated exactly.
+
+| model | test MSE | mean window IC |
+|---|---|---|
+| zero | 0.442 | — |
+| persistence (last week = next week) | 0.525 | +0.376 |
+| ridge on own lags | 0.325 | +0.476 |
+| GRU, no graph | 0.324 | **+0.490** |
+| GRU + graph attention | 0.328 | +0.489 |
+
+![model comparison](results/phase2_comparison.png)
+
+**Finding 1 — attention is strongly forecastable.** Out-of-sample cross-sectional IC ≈ **0.49** at a 7-day horizon. For calibration: equity return forecasters celebrate ICs of 0.02–0.05. Attention has heavy autocorrelation structure that prices don't, which is exactly why "predict attention, not returns" is a tractable objective.
+
+**Finding 2 — the graph contributes nothing at this horizon.** Graph vs no-graph: 86/186 window wins (sign p = 0.86). Even *burst-conditioned* — evaluating only windows where some entity just had a >2.5σ shock, i.e. when there is something to propagate — the tie holds (0.503 vs 0.506, n = 129). A node's own history already contains everything its neighbors add, seven days out.
+
+This is the project's third propagation negative, and the picture is now coherent: economically adjacent entities share attention (Phase 1, decisively), but the sharing is **contemporaneous, undirected, and fully absorbed within days** — visible in levels, useless for week-ahead increments with a static, hand-drawn graph. The honest conclusion so far: *the graph describes attention's structure; it has not yet been shown to improve attention's forecast.*
+
+What could still rescue graph forecasting, in order of promise: shorter horizons (1–2 days, where Phase 0's lag histogram put most of the mass), learned edges (infer the graph from attention data instead of drawing it from priors), and entity-resolved news events (GDELT GKG) as the shock source. That list is Phase 2b.
+
 ## Run it yourself
 
 ```bash
@@ -101,6 +123,7 @@ python -m venv .venv && .venv/bin/pip install -r requirements.txt
 .venv/bin/python scripts/run_phase0.py   # the original falsification test
 .venv/bin/python scripts/run_phase1.py   # four themes + permutation null
 .venv/bin/python scripts/run_phase1b.py  # transfer-entropy direction + GDELT
+.venv/bin/python scripts/run_phase2.py   # train the GNN + ablation + baselines
 ```
 
 No API keys, ~10 minutes on first run (Wikimedia pageviews are free; responses are cached in `data/raw/`, and this repo ships the cache so reruns are instant). Outputs land in `results/`.
@@ -117,8 +140,9 @@ No API keys, ~10 minutes on first run (Wikimedia pageviews are free; responses a
 - [x] **Phase 0 — falsification test**: does attention decay with graph distance? *(yes, weakly — worth continuing)*
 - [x] **Phase 1 — scale the evidence**: three more themes across two eras + degree-preserving permutation null. *(Decay confirmed: pooled p = 0.0008, Fisher p = 0.00015. Direction: still unresolved.)*
 - [x] **Phase 1b — direction & proxies**: transfer entropy + GDELT news volume. *(Direction: absent, two methods agree. GDELT: decay reverses — the result is demand-side. Both reported in full above.)*
-- [ ] **Phase 2 — model it**: temporal GNN over the entity graph predicting next-week attention shocks as graph *diffusion* (per Phase 1b, not a directed cascade); Hawkes processes for burst timing; contrastive embeddings of "attention episodes" (does robots→GPU→power rhyme with ChatGPT→GPU→power?). GDELT GKG entity counts as a cleaner news proxy.
-- [ ] **Phase 3 — the capital-flow link**: do graph-predicted attention shocks lead returns/volume beyond momentum baselines (Cohen & Frazzini's *Economic Links and Predictable Returns* is the benchmark to beat)?
+- [x] **Phase 2 — model it**: temporal GNN vs its own no-graph ablation. *(Attention is forecastable: IC ≈ 0.49 out-of-sample. The static graph adds nothing at 7 days — even burst-conditioned. Both reported in full above.)*
+- [ ] **Phase 2b — where graph forecasting could still work**: 1–2 day horizons; learned/inferred edges instead of hand-drawn ones; GDELT GKG entity-level events as shocks; contrastive "attention episode" embeddings.
+- [ ] **Phase 3 — the capital-flow link**: does *forecasted attention* (IC 0.49 is plenty to work with) lead returns/volume beyond momentum baselines (Cohen & Frazzini's *Economic Links and Predictable Returns* is the benchmark to beat)?
 
 ## Why this design
 
