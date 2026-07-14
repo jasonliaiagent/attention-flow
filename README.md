@@ -5,6 +5,8 @@
 > ### 🔴 [**Live demo — the attention map of the economy →**](https://jasonliaiagent.github.io/attention-flow/)
 > Watch abnormal attention glow across four economic graphs, updated daily by CI, with the trained GNN's next-week forecast one toggle away. No server, no build — a self-contained page fed by a GitHub Actions cron.
 
+[![the attention map](docs/preview.png)](https://jasonliaiagent.github.io/attention-flow/)
+
 Most financial ML tries to predict prices. This project tries to learn something different: **how human attention propagates through the economy's graph** — from a viral AI product, to the GPUs it runs on, to the fabs that make them, to the data centers that house them, to the power plants that feed them, to the copper in the wires — and how that propagation eventually becomes capital flow.
 
 ```
