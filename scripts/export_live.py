@@ -22,6 +22,8 @@ from attention_flow.analysis import attention_shocks
 from attention_flow.dataset import INPUT_DAYS, build_adjacency
 from attention_flow.graph import THEMES
 from attention_flow.model import AttentionDiffusionNet
+from attention_flow.track import summary as track_summary
+from attention_flow.track import update as track_update
 from attention_flow.wiki import load_panel
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -49,6 +51,7 @@ def main() -> None:
     model.eval()
 
     themes_out = []
+    live_shocks: dict = {}
     data_through = None
     for name, theme in THEMES.items():
         if name == "covid":  # archived era: show its historical final window instead
@@ -60,6 +63,7 @@ def main() -> None:
         panel = panel.dropna(how="all")
         shocks = attention_shocks(panel)
         if name != "covid":
+            live_shocks[name] = shocks
             last = shocks.index[-1]
             data_through = max(data_through, last) if data_through is not None else last
 
@@ -94,9 +98,15 @@ def main() -> None:
         print(f"  {name}: {len(nodes)} nodes, {len(edges)} edges, "
               f"{len(panel)} days through {panel.index[-1].date()}")
 
+    track = track_update(DOCS / "track.json", model, live_shocks)
+    ts = track_summary(track)
+    print(f"  track record: {ts['n_weeks']} graded weeks, mean IC {ts['mean_ic']}, "
+          f"{ts['n_live_graded']} graded live")
+
     out = {
         "generated_utc": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
         "data_through": str(data_through.date()),
+        "track": ts,
         "themes": themes_out,
     }
     (DOCS / "data.json").write_text(json.dumps(out))

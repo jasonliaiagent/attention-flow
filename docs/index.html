@@ -70,6 +70,10 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;
 #finding b{color:var(--ink);font-weight:500}
 #finding a{color:var(--ember);text-decoration:none}
 #finding a:hover{text-decoration:underline}
+#track{margin-top:9px;padding-top:8px;border-top:1px solid var(--line)}
+#track .hdr{letter-spacing:.1em;font-size:10px;color:var(--dim)}
+#track .hdr b{color:#9fd8b0;font-weight:500}
+#track svg{display:block;margin-top:5px}
 /* tooltip */
 #tip{position:fixed;z-index:9;pointer-events:none;display:none;min-width:190px;
   background:var(--panel);border:1px solid var(--line);border-radius:3px;
@@ -116,6 +120,7 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;
   <b>Finding:</b> predicted attention leads next-week <b>trading volume</b>
   (t ≈ 3.5, out-of-sample) — but not exploitable returns.
   <a href="https://github.com/jasonliaiagent/attention-flow">method &amp; code ↗</a>
+  <div id="track"></div>
 </div>
 
 <div id="tip"></div>
@@ -280,6 +285,24 @@ function hover(i,on,e){
       <div class="vals" style="margin-top:4px">30-day attention · en.wikipedia/${n.article.replaceAll(" ","_")}</div>`;
   } else tip.style.display="none";
 }
+
+// public track record: the model grades its own weekly forecasts
+(function(){
+  const t=data.track, el=document.getElementById("track");
+  if(!t||!t.n_weeks){el.innerHTML=`<div class="hdr">TRACK RECORD · first graded week pending</div>`;return}
+  const w=13,gap=3,h=30,mx=Math.max(...t.ics.map(Math.abs),0.4);
+  const bars=t.ics.map((v,i)=>{
+    const bh=Math.max(2,Math.abs(v)/mx*(h/2)), y=v>=0?h/2-bh:h/2;
+    return `<rect x="${i*(w+gap)}" y="${y}" width="${w}" height="${bh}" rx="1"
+      fill="${v>=0?"#7fdc9a":"#ff5d3a"}" fill-opacity="0.85"><title>${t.weeks[i]}: IC ${v>0?"+":""}${v}</title></rect>`;
+  }).join("");
+  el.innerHTML=`<div class="hdr">MODEL TRACK RECORD · graded weekly, out-of-sample ·
+    mean IC <b>${t.mean_ic>0?"+":""}${t.mean_ic}</b> over ${t.n_weeks} wks ·
+    ${Math.round(t.share_positive*100)}% positive</div>
+    <svg width="${t.ics.length*(w+gap)}" height="${h}">
+      <line x1="0" y1="${h/2}" x2="${t.ics.length*(w+gap)}" y2="${h/2}" stroke="rgba(120,160,195,.3)"/>
+      ${bars}</svg>`;
+})();
 
 // tabs + mode
 const tabs=document.getElementById("tabs");

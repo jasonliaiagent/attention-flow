@@ -4,6 +4,8 @@
 
 > ### 🔴 [**Live demo — the attention map of the economy →**](https://jasonliaiagent.github.io/attention-flow/)
 > Watch abnormal attention glow across four economic graphs, updated daily by CI, with the trained GNN's next-week forecast one toggle away. No server, no build — a self-contained page fed by a GitHub Actions cron.
+>
+> **The model grades itself in public**: every week its deployed forecast is scored against what actually happened, and the page shows the running out-of-sample IC (currently ≈ +0.41 over the trailing 12 weeks — consistent with the Phase-2 test IC of 0.49). The full forecast log is auditable in [`docs/track.json`](docs/track.json).
 
 [![the attention map](docs/preview.png)](https://jasonliaiagent.github.io/attention-flow/)
 
