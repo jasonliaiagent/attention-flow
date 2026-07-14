@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>attention-flow · a live map of where the market is looking</title>
+<meta name="description" content="Live attention map of the economy: Wikipedia attention shocks and GNN forecasts over economic graphs.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06080b; --ink:#d7e0e8; --dim:#5f7181; --faint:#31404d;
+  --hot:#ff5d3a; --ember:#e8842c; --cold:#3f6d9e;
+  --panel:rgba(9,13,18,.82); --line:rgba(120,160,195,.14);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{
+  background:var(--bg); color:var(--ink); overflow:hidden;
+  font-family:"IBM Plex Mono",monospace; font-size:13px;
+  -webkit-font-smoothing:antialiased;
+}
+/* blueprint grid + vignette */
+body::before{content:"";position:fixed;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 90% 70% at 62% 45%, rgba(60,110,160,.07), transparent 60%),
+    repeating-linear-gradient(0deg, rgba(96,140,180,.045) 0 1px, transparent 1px 56px),
+    repeating-linear-gradient(90deg, rgba(96,140,180,.045) 0 1px, transparent 1px 56px);
+}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 120% 100% at 50% 50%, transparent 55%, rgba(0,0,0,.55));}
+#map{position:fixed;inset:0;width:100%;height:100%;cursor:crosshair}
+/* HUD */
+.hud{position:fixed;z-index:5}
+#brand{top:26px;left:28px;max-width:340px}
+#brand h1{font-family:"Chakra Petch",sans-serif;font-weight:700;font-size:21px;
+  letter-spacing:.14em;color:#eef4f8}
+#brand h1 span{color:var(--ember)}
+#brand p{margin-top:6px;color:var(--dim);font-size:12px;line-height:1.55}
+#meta{margin-top:10px;font-size:11px;color:var(--dim)}
+#meta .chip{display:inline-block;padding:2px 8px;border:1px solid var(--line);
+  border-radius:2px;margin-right:8px;letter-spacing:.08em}
+#meta .chip.live{color:#7fdc9a;border-color:rgba(127,220,154,.35)}
+#meta .chip.live::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;
+  background:#7fdc9a;margin-right:6px;animation:pulse 2s infinite}
+#meta .chip.stale{color:var(--ember);border-color:rgba(232,132,44,.4)}
+#meta .chip.archive{color:var(--dim)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+#controls{top:26px;right:28px;text-align:right}
+.tabs{display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap}
+.tabs button,#mode button{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.06em;
+  background:var(--panel);color:var(--dim);border:1px solid var(--line);
+  padding:7px 12px;cursor:pointer;border-radius:2px;backdrop-filter:blur(6px);
+  transition:color .2s,border-color .2s}
+.tabs button:hover,#mode button:hover{color:var(--ink)}
+.tabs button.on{color:#f3d9b0;border-color:rgba(232,132,44,.55)}
+#mode{margin-top:10px;display:inline-flex}
+#mode button{border-radius:0}
+#mode button:first-child{border-radius:2px 0 0 2px}
+#mode button:last-child{border-radius:0 2px 2px 0;border-left:none}
+#mode button.on{color:#0b0e12;background:var(--ember);border-color:var(--ember);font-weight:500}
+#legend{bottom:26px;right:28px;text-align:right;color:var(--dim);font-size:11px}
+#legend .bar{width:170px;height:6px;margin:7px 0 4px auto;border-radius:2px;
+  background:linear-gradient(90deg,#3f6d9e,#5c6b76,#e8842c,#ff5d3a)}
+#legend .lab{display:flex;justify-content:space-between;width:170px;margin-left:auto}
+#finding{bottom:26px;left:28px;max-width:430px;color:var(--dim);font-size:11px;line-height:1.6;
+  border-left:2px solid var(--ember);padding-left:12px}
+#finding b{color:var(--ink);font-weight:500}
+#finding a{color:var(--ember);text-decoration:none}
+#finding a:hover{text-decoration:underline}
+/* tooltip */
+#tip{position:fixed;z-index:9;pointer-events:none;display:none;min-width:190px;
+  background:var(--panel);border:1px solid var(--line);border-radius:3px;
+  padding:10px 12px;backdrop-filter:blur(8px)}
+#tip h3{font-family:"Chakra Petch",sans-serif;font-size:13px;letter-spacing:.06em;color:#f0f5f9}
+#tip .vals{margin:6px 0 4px;font-size:11px;color:var(--dim)}
+#tip .vals b{font-weight:500}
+#tip svg{display:block;margin-top:4px}
+#err{position:fixed;inset:0;display:none;place-items:center;color:var(--dim);z-index:20;
+  text-align:center;line-height:2}
+@media (max-width:720px){
+  #brand p{display:none} #finding{display:none} #legend{display:none}
+  #controls{top:auto;bottom:20px;left:16px;right:16px;text-align:left}
+  .tabs{justify-content:flex-start}
+  #brand{top:20px;left:16px}
+}
+</style>
+</head>
+<body>
+<svg id="map" aria-label="attention map"></svg>
+
+<div class="hud" id="brand">
+  <h1>ATTENTION<span>-</span>FLOW</h1>
+  <p>a live map of where the market is looking — abnormal Wikipedia attention
+     over economic graphs, with a graph-network forecast of next week.</p>
+  <div id="meta"></div>
+</div>
+
+<div class="hud" id="controls">
+  <div class="tabs" id="tabs"></div>
+  <div id="mode">
+    <button id="btn-now" class="on">CURRENT</button>
+    <button id="btn-fc">FORECAST +7D</button>
+  </div>
+</div>
+
+<div class="hud" id="legend">
+  <div>abnormal attention (z)</div>
+  <div class="bar"></div>
+  <div class="lab"><span>−2.5 cold</span><span>+2.5 hot</span></div>
+</div>
+
+<div class="hud" id="finding">
+  <b>Finding:</b> predicted attention leads next-week <b>trading volume</b>
+  (t ≈ 3.5, out-of-sample) — but not exploitable returns.
+  <a href="https://github.com/jasonliaiagent/attention-flow">method &amp; code ↗</a>
+</div>
+
+<div id="tip"></div>
+<div id="err"></div>
+
+<script>
+(async function(){
+const svg=document.getElementById("map"), tip=document.getElementById("tip");
+const NS="http://www.w3.org/2000/svg";
+let W=innerWidth,H=innerHeight;
+svg.setAttribute("viewBox",`0 0 ${W} ${H}`);
+addEventListener("resize",()=>{W=innerWidth;H=innerHeight;svg.setAttribute("viewBox",`0 0 ${W} ${H}`)});
+
+let data;
+try{ data=await (await fetch("data.json",{cache:"no-store"})).json(); }
+catch(e){ const er=document.getElementById("err");
+  er.style.display="grid"; er.innerHTML="data.json not found —<br>run scripts/export_live.py"; return; }
+
+// glow filter + grain
+svg.innerHTML=`<defs>
+  <filter id="glow" x="-80%" y="-80%" width="260%" height="260%">
+    <feGaussianBlur stdDeviation="5" result="b"/>
+    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+</defs>
+<g id="edges"></g><g id="nodes"></g><g id="labels"></g>`;
+const gE=svg.querySelector("#edges"), gN=svg.querySelector("#nodes"), gL=svg.querySelector("#labels");
+
+// color scale: -2.5 steel -> 0 slate -> +2.5 hot
+function lerp(a,b,t){return a+(b-a)*t}
+function hex(c){return [parseInt(c.slice(1,3),16),parseInt(c.slice(3,5),16),parseInt(c.slice(5,7),16)]}
+const C1=hex("#3f6d9e"),C2=hex("#5c6b76"),C3=hex("#e8842c"),C4=hex("#ff5d3a");
+function color(v){
+  const t=Math.max(-2.5,Math.min(2.5,v));
+  let a,b,u;
+  if(t<0){a=C1;b=C2;u=(t+2.5)/2.5}
+  else if(t<1.2){a=C2;b=C3;u=t/1.2}
+  else {a=C3;b=C4;u=(t-1.2)/1.3}
+  return `rgb(${lerp(a[0],b[0],u)|0},${lerp(a[1],b[1],u)|0},${lerp(a[2],b[2],u)|0})`;
+}
+const radius=v=>7+13*Math.min(Math.abs(v),3)/3;
+
+let theme=data.themes[0], mode="now", nodes=[], links=[], el={};
+
+function meta(){
+  const m=document.getElementById("meta");
+  const stale=(new Date()-new Date(data.data_through))/864e5>6;
+  const chip=theme.live?(stale?`<span class="chip stale">STALE</span>`:`<span class="chip live">LIVE</span>`)
+                       :`<span class="chip archive">2022 ARCHIVE</span>`;
+  m.innerHTML=`${chip}data through ${theme.live?data.data_through:"2022-12-31"} · refreshed ${data.generated_utc}`;
+}
+
+function build(){
+  gE.innerHTML="";gN.innerHTML="";gL.innerHTML="";el={};
+  const cx=W*0.55,cy=H*0.5;
+  nodes=theme.nodes.map((n,i)=>({...n,
+    x:cx+16*Math.sqrt(i+1)*Math.cos(i*2.39996),   // golden-angle spiral: no overlaps
+    y:cy+16*Math.sqrt(i+1)*Math.sin(i*2.39996),
+    vx:0,vy:0}));
+  const idx=Object.fromEntries(nodes.map((n,i)=>[n.id,i]));
+  links=theme.edges.map(e=>({s:idx[e.source],t:idx[e.target]}));
+  links.forEach(l=>{
+    const ln=document.createElementNS(NS,"line");
+    ln.setAttribute("stroke","rgba(130,170,205,.14)");ln.setAttribute("stroke-width","1");
+    gE.appendChild(ln);l.el=ln;
+  });
+  nodes.forEach((n,i)=>{
+    const c=document.createElementNS(NS,"circle");
+    c.setAttribute("filter","url(#glow)");
+    c.addEventListener("mouseenter",e=>hover(i,true,e));
+    c.addEventListener("mousemove",e=>place(e));
+    c.addEventListener("mouseleave",()=>hover(i,false));
+    gN.appendChild(c);
+    const t=document.createElementNS(NS,"text");
+    t.textContent=n.id;
+    t.setAttribute("fill","rgba(200,215,228,.42)");
+    t.setAttribute("font-size","10");t.setAttribute("font-family","IBM Plex Mono");
+    gL.appendChild(t);
+    el[i]={c,t};
+  });
+  meta();
+}
+
+function val(n){return mode==="now"?n.now:n.forecast}
+
+// force simulation
+let tick=0;
+function step(){
+  tick++;
+  const cx=W*0.55,cy=H*0.5;
+  for(let i=0;i<nodes.length;i++){
+    const a=nodes[i];
+    a.vx+=(cx-a.x)*2.0e-3; a.vy+=(cy-a.y)*2.0e-3;       // centering
+    for(let j=i+1;j<nodes.length;j++){                   // repulsion (with cutoff)
+      const b=nodes[j];let dx=a.x-b.x,dy=a.y-b.y;
+      let d2=dx*dx+dy*dy+200; if(d2>62500)continue;
+      const f=1300/d2;
+      dx*=f;dy*=f;a.vx+=dx;a.vy+=dy;b.vx-=dx;b.vy-=dy;
+    }
+    a.vx+=Math.sin(tick/90+i)*0.004;                     // living drift
+    a.vy+=Math.cos(tick/110+i*1.7)*0.004;
+  }
+  links.forEach(l=>{                                     // springs
+    const a=nodes[l.s],b=nodes[l.t];
+    const dx=b.x-a.x,dy=b.y-a.y,d=Math.hypot(dx,dy)||1;
+    const f=(d-105)*0.008/d;
+    a.vx+=dx*f;a.vy+=dy*f;b.vx-=dx*f;b.vy-=dy*f;
+  });
+  nodes.forEach(n=>{
+    n.vx*=0.84;n.vy*=0.84;
+    n.vx=Math.max(-3.5,Math.min(3.5,n.vx));n.vy=Math.max(-3.5,Math.min(3.5,n.vy));
+    n.x+=n.vx;n.y+=n.vy;
+    n.x=Math.max(80,Math.min(W-90,n.x));n.y=Math.max(110,Math.min(H-120,n.y));
+  });
+  render();
+  requestAnimationFrame(step);
+}
+
+let disp={}; // displayed value per node (for smooth mode transitions)
+function render(){
+  const pulse=1+0.045*Math.sin(tick/14);
+  nodes.forEach((n,i)=>{
+    const target=val(n);
+    disp[i]=disp[i]===undefined?target:disp[i]+(target-disp[i])*0.08;
+    const v=disp[i],{c,t}=el[i];
+    c.setAttribute("cx",n.x);c.setAttribute("cy",n.y);
+    c.setAttribute("r",radius(v)*(Math.abs(v)>1.4?pulse:1));
+    c.setAttribute("fill",color(v));c.setAttribute("fill-opacity","0.9");
+    t.setAttribute("x",n.x+radius(v)+5);t.setAttribute("y",n.y+3);
+    t.setAttribute("fill",`rgba(200,215,228,${Math.abs(v)>1?0.85:0.4})`);
+  });
+  links.forEach(l=>{
+    l.el.setAttribute("x1",nodes[l.s].x);l.el.setAttribute("y1",nodes[l.s].y);
+    l.el.setAttribute("x2",nodes[l.t].x);l.el.setAttribute("y2",nodes[l.t].y);
+  });
+}
+
+function spark(n){
+  const w=150,h=34,vals=n.spark;
+  const mn=Math.min(...vals,-0.5),mx=Math.max(...vals,0.5);
+  const pts=vals.map((v,i)=>`${(i/(vals.length-1))*w},${h-(v-mn)/(mx-mn)*h}`).join(" ");
+  const zero=h-(0-mn)/(mx-mn)*h;
+  return `<svg width="${w}" height="${h}">
+    <line x1="0" y1="${zero}" x2="${w}" y2="${zero}" stroke="rgba(120,160,195,.25)" stroke-dasharray="2 3"/>
+    <polyline points="${pts}" fill="none" stroke="${color(n.now)}" stroke-width="1.5"/></svg>`;
+}
+function place(e){tip.style.left=Math.min(e.clientX+16,W-230)+"px";tip.style.top=Math.min(e.clientY+14,H-130)+"px"}
+function hover(i,on,e){
+  const n=nodes[i];
+  links.forEach(l=>{
+    const hit=on&&(l.s===i||l.t===i);
+    l.el.setAttribute("stroke",hit?color(val(n)):"rgba(130,170,205,.14)");
+    l.el.setAttribute("stroke-opacity",hit?"0.7":"1");
+    l.el.setAttribute("stroke-width",hit?"1.5":"1");
+  });
+  if(on){
+    tip.style.display="block";place(e);
+    tip.innerHTML=`<h3>${n.id}</h3>
+      <div class="vals">now <b style="color:${color(n.now)}">${n.now>0?"+":""}${n.now.toFixed(2)}σ</b>
+      &nbsp;·&nbsp; +7d forecast <b style="color:${color(n.forecast)}">${n.forecast>0?"+":""}${n.forecast.toFixed(2)}σ</b></div>
+      ${spark(n)}
+      <div class="vals" style="margin-top:4px">30-day attention · en.wikipedia/${n.article.replaceAll(" ","_")}</div>`;
+  } else tip.style.display="none";
+}
+
+// tabs + mode
+const tabs=document.getElementById("tabs");
+data.themes.forEach((t,i)=>{
+  const b=document.createElement("button");
+  b.textContent=t.label;if(i===0)b.classList.add("on");
+  b.onclick=()=>{tabs.querySelectorAll("button").forEach(x=>x.classList.remove("on"));
+    b.classList.add("on");theme=t;disp={};build();};
+  tabs.appendChild(b);
+});
+const bn=document.getElementById("btn-now"),bf=document.getElementById("btn-fc");
+bn.onclick=()=>{mode="now";bn.classList.add("on");bf.classList.remove("on")};
+bf.onclick=()=>{mode="forecast";bf.classList.add("on");bn.classList.remove("on")};
+
+build();step();
+})();
+</script>
+</body>
+</html>
