@@ -49,6 +49,11 @@ def main() -> None:
     model = AttentionDiffusionNet()
     model.load_state_dict(torch.load(ROOT / "models" / "attention_gnn.pt", weights_only=True))
     model.eval()
+    # the no-graph twin: its forecast is the "own-history" component, so
+    # (full - base) isolates what the graph itself adds per node
+    base_model = AttentionDiffusionNet(use_graph=False)
+    base_model.load_state_dict(torch.load(ROOT / "models" / "attention_nograph.pt", weights_only=True))
+    base_model.eval()
 
     themes_out = []
     live_shocks: dict = {}
@@ -74,6 +79,7 @@ def main() -> None:
             x = torch.from_numpy(values[-INPUT_DAYS:].T[None])
             adj = torch.from_numpy(build_adjacency(list(shocks.columns), theme.edge_set()))
             pred = model(x, adj)[0].numpy()
+            pred_base = base_model(x, adj)[0].numpy()
 
         now = np.nan_to_num(shocks.tail(7).mean().to_numpy(dtype=float), nan=0.0)
         nodes = [
@@ -82,6 +88,7 @@ def main() -> None:
                 "article": theme.nodes[node],
                 "now": round(float(now[i]), 3),
                 "forecast": round(float(pred[i]), 3),
+                "base": round(float(pred_base[i]), 3),
                 "spark": [round(float(v), 3) for v in values[-SPARK_DAYS:, i]],
             }
             for i, node in enumerate(shocks.columns)
@@ -98,6 +105,22 @@ def main() -> None:
         print(f"  {name}: {len(nodes)} nodes, {len(edges)} edges, "
               f"{len(panel)} days through {panel.index[-1].date()}")
 
+    # detected events: attention bursts over the last 5 days, all live themes
+    events = []
+    for name, shocks in live_shocks.items():
+        recent = shocks.tail(5)
+        for node in recent.columns:
+            s = recent[node].dropna()
+            if s.empty:
+                continue
+            peak_day = s.abs().idxmax()
+            z = float(s.loc[peak_day])
+            if abs(z) >= 2.0:
+                events.append({"theme": name, "node": node,
+                               "date": str(peak_day.date()), "z": round(z, 2)})
+    events.sort(key=lambda e: -abs(e["z"]))
+    events = events[:10]
+
     track = track_update(DOCS / "track.json", model, live_shocks)
     ts = track_summary(track)
     print(f"  track record: {ts['n_weeks']} graded weeks, mean IC {ts['mean_ic']}, "
@@ -107,6 +130,7 @@ def main() -> None:
         "generated_utc": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
         "data_through": str(data_through.date()),
         "track": ts,
+        "events": events,
         "themes": themes_out,
     }
     (DOCS / "data.json").write_text(json.dumps(out))

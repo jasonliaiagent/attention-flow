@@ -34,6 +34,32 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;
 /* HUD */
 .hud{position:fixed;z-index:5}
 #brand{top:26px;left:28px;max-width:340px}
+#rail{top:170px;left:28px;width:305px;display:flex;flex-direction:column;gap:12px;
+  max-height:calc(100vh - 320px);overflow:hidden}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:3px;
+  padding:11px 13px;backdrop-filter:blur(8px)}
+.card h2{font-family:"Chakra Petch",sans-serif;font-size:11px;letter-spacing:.16em;
+  color:var(--dim);font-weight:600;margin-bottom:8px}
+.card h2 b{color:#f3d9b0}
+.row{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:11.5px;cursor:pointer;
+  border-radius:2px}
+.row:hover{background:rgba(130,170,205,.07)}
+.row .z{min-width:52px;text-align:right;font-weight:500}
+.row .who{color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .sub{color:var(--faint);font-size:10px;margin-left:auto;white-space:nowrap}
+.row .chip{font-size:9px;letter-spacing:.05em;padding:1px 5px;border-radius:2px;
+  border:1px solid var(--line);color:var(--dim);white-space:nowrap}
+.row .chip.graph{color:#9fd8b0;border-color:rgba(127,220,154,.35)}
+.bar{height:3px;border-radius:2px;background:rgba(130,170,205,.15);flex:1;min-width:30px}
+.bar i{display:block;height:100%;border-radius:2px}
+#search input{width:100%;background:rgba(6,9,12,.6);border:1px solid var(--line);
+  color:var(--ink);font-family:"IBM Plex Mono",monospace;font-size:12px;padding:7px 9px;
+  border-radius:2px;outline:none}
+#search input:focus{border-color:rgba(232,132,44,.5)}
+#search .hint{color:var(--faint);font-size:10px;margin-top:6px;line-height:1.5}
+#search .result{margin-top:8px;font-size:11.5px;line-height:1.6;color:var(--dim)}
+#search .result b{color:var(--ink);font-weight:500}
+@media (max-width:860px){#rail{display:none}}
 #brand h1{font-family:"Chakra Petch",sans-serif;font-weight:700;font-size:21px;
   letter-spacing:.14em;color:#eef4f8}
 #brand h1 span{color:var(--ember)}
@@ -110,6 +136,17 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;
   </div>
 </div>
 
+<div class="hud" id="rail">
+  <div class="card" id="events"><h2>DETECTED EVENTS <b>· 5 days</b></h2><div class="body"></div></div>
+  <div class="card" id="wherenext"><h2>WHERE THE CROWD GOES NEXT <b>· model, +7d</b></h2><div class="body"></div></div>
+  <div class="card" id="search">
+    <h2>ANALYZE ANY ENTITY</h2>
+    <input id="q" placeholder="type any Wikipedia topic, press Enter" spellcheck="false">
+    <div class="hint">fetches its real attention history live from Wikimedia and scores it with the same statistics as the map</div>
+    <div class="result"></div>
+  </div>
+</div>
+
 <div class="hud" id="legend">
   <div>abnormal attention (z)</div>
   <div class="bar"></div>
@@ -163,7 +200,9 @@ function color(v){
 }
 const radius=v=>7+13*Math.min(Math.abs(v),3)/3;
 
-let theme=data.themes[0], mode="now", nodes=[], links=[], el={};
+let theme=data.themes[0], mode="now", nodes=[], links=[], el={}, focusId=null, focusUntil=0;
+const THEME_BY_KEY=Object.fromEntries(data.themes.map(t=>[t.key,t]));
+const fmtz=v=>(v>0?"+":"")+v.toFixed(2)+"σ";
 
 function meta(){
   const m=document.getElementById("meta");
@@ -201,6 +240,8 @@ function build(){
     gL.appendChild(t);
     el[i]={c,t};
   });
+  for(let k=0;k<200;k++)physics(true);   // warm-up: arrive pre-settled, not clumped
+  for(let k=0;k<80;k++)physics(false);   // then cool with the live constants
   meta();
 }
 
@@ -208,20 +249,23 @@ function val(n){return mode==="now"?n.now:n.forecast}
 
 // force simulation
 let tick=0;
-function step(){
-  tick++;
-  const cx=W*0.55,cy=H*0.5;
+function physics(warm){
+  const railPad=W>860?340:24;
+  const cx=(railPad+W-90)/2,cy=H*0.5;
+  const cutoff=warm?1e9:62500, rep=1300, clampV=warm?8:3.5;
   for(let i=0;i<nodes.length;i++){
     const a=nodes[i];
     a.vx+=(cx-a.x)*2.0e-3; a.vy+=(cy-a.y)*2.0e-3;       // centering
-    for(let j=i+1;j<nodes.length;j++){                   // repulsion (with cutoff)
+    for(let j=i+1;j<nodes.length;j++){                   // repulsion
       const b=nodes[j];let dx=a.x-b.x,dy=a.y-b.y;
-      let d2=dx*dx+dy*dy+200; if(d2>62500)continue;
-      const f=1300/d2;
+      let d2=dx*dx+dy*dy+200; if(d2>cutoff)continue;
+      const f=rep/d2;
       dx*=f;dy*=f;a.vx+=dx;a.vy+=dy;b.vx-=dx;b.vy-=dy;
     }
-    a.vx+=Math.sin(tick/90+i)*0.004;                     // living drift
-    a.vy+=Math.cos(tick/110+i*1.7)*0.004;
+    if(!warm){
+      a.vx+=Math.sin(tick/140+i)*0.0015;                 // living drift (gentle)
+      a.vy+=Math.cos(tick/170+i*1.7)*0.0015;
+    }
   }
   links.forEach(l=>{                                     // springs
     const a=nodes[l.s],b=nodes[l.t];
@@ -231,26 +275,33 @@ function step(){
   });
   nodes.forEach(n=>{
     n.vx*=0.84;n.vy*=0.84;
-    n.vx=Math.max(-3.5,Math.min(3.5,n.vx));n.vy=Math.max(-3.5,Math.min(3.5,n.vy));
+    n.vx=Math.max(-clampV,Math.min(clampV,n.vx));n.vy=Math.max(-clampV,Math.min(clampV,n.vy));
     n.x+=n.vx;n.y+=n.vy;
-    n.x=Math.max(80,Math.min(W-90,n.x));n.y=Math.max(110,Math.min(H-120,n.y));
+    n.x=Math.max(railPad,Math.min(W-90,n.x));n.y=Math.max(110,Math.min(H-120,n.y));
   });
+}
+function step(){
+  tick++;
+  physics(false);
   render();
   requestAnimationFrame(step);
 }
 
 let disp={}; // displayed value per node (for smooth mode transitions)
 function render(){
-  const pulse=1+0.045*Math.sin(tick/14);
+  const pulse=1+0.03*Math.sin(tick/18);
   nodes.forEach((n,i)=>{
     const target=val(n);
     disp[i]=disp[i]===undefined?target:disp[i]+(target-disp[i])*0.08;
     const v=disp[i],{c,t}=el[i];
+    const focused=n.id===focusId&&tick<focusUntil;
     c.setAttribute("cx",n.x);c.setAttribute("cy",n.y);
-    c.setAttribute("r",radius(v)*(Math.abs(v)>1.4?pulse:1));
+    c.setAttribute("r",radius(v)*(Math.abs(v)>1.4?pulse:1)*(focused?1.35:1));
     c.setAttribute("fill",color(v));c.setAttribute("fill-opacity","0.9");
+    c.setAttribute("stroke",focused?"#f3d9b0":"none");
+    c.setAttribute("stroke-width",focused?2:0);
     t.setAttribute("x",n.x+radius(v)+5);t.setAttribute("y",n.y+3);
-    t.setAttribute("fill",`rgba(200,215,228,${Math.abs(v)>1?0.85:0.4})`);
+    t.setAttribute("fill",`rgba(200,215,228,${focused?1:Math.abs(v)>1?0.85:0.4})`);
   });
   links.forEach(l=>{
     l.el.setAttribute("x1",nodes[l.s].x);l.el.setAttribute("y1",nodes[l.s].y);
@@ -306,13 +357,100 @@ function hover(i,on,e){
 
 // tabs + mode
 const tabs=document.getElementById("tabs");
+const tabBtns={};
 data.themes.forEach((t,i)=>{
   const b=document.createElement("button");
   b.textContent=t.label;if(i===0)b.classList.add("on");
   b.onclick=()=>{tabs.querySelectorAll("button").forEach(x=>x.classList.remove("on"));
-    b.classList.add("on");theme=t;disp={};build();};
+    b.classList.add("on");theme=t;disp={};build();renderWhereNext();};
+  tabBtns[t.key]=b;
   tabs.appendChild(b);
 });
+
+function focusNode(themeKey,nodeId){
+  if(theme.key!==themeKey) tabBtns[themeKey].onclick();
+  focusId=nodeId;focusUntil=tick+420;
+}
+
+// DETECTED EVENTS: the bursts of the last 5 days, most violent first
+(function(){
+  const box=document.querySelector("#events .body");
+  if(!data.events||!data.events.length){
+    box.innerHTML=`<div class="row" style="cursor:default;color:var(--faint)">no attention burst ≥2σ in the last 5 days — a quiet week</div>`;return}
+  box.innerHTML=data.events.map(e=>`
+    <div class="row" data-t="${e.theme}" data-n="${e.node}">
+      <span class="z" style="color:${color(e.z)}">${e.z>0?"+":""}${e.z.toFixed(1)}σ</span>
+      <span class="who">${e.node}</span>
+      <span class="sub">${e.date.slice(5)} · ${THEME_BY_KEY[e.theme].label}</span>
+    </div>`).join("");
+  box.querySelectorAll(".row").forEach(r=>
+    r.onclick=()=>focusNode(r.dataset.t,r.dataset.n));
+})();
+
+// WHERE THE CROWD GOES NEXT: ranked +7d forecasts with the reason decomposed
+function renderWhereNext(){
+  const box=document.querySelector("#wherenext .body");
+  const top=[...theme.nodes].sort((a,b)=>b.forecast-a.forecast).slice(0,6);
+  const mx=Math.max(...top.map(n=>Math.abs(n.forecast)),0.4);
+  box.innerHTML=top.map(n=>{
+    const g=n.forecast-n.base;                       // the graph's contribution
+    const chip=Math.abs(g)>=0.05
+      ?`<span class="chip graph">graph ${g>0?"+":""}${g.toFixed(2)}</span>`
+      :`<span class="chip">own history</span>`;
+    return `<div class="row" data-n="${n.id}">
+      <span class="z" style="color:${color(n.forecast)}">${fmtz(n.forecast)}</span>
+      <span class="who">${n.id}</span>
+      <span class="bar"><i style="width:${Math.abs(n.forecast)/mx*100}%;background:${color(n.forecast)}"></i></span>
+      ${chip}</div>`;
+  }).join("");
+  box.querySelectorAll(".row").forEach(r=>
+    r.onclick=()=>focusNode(theme.key,r.dataset.n));
+}
+renderWhereNext();
+
+// ANALYZE ANY ENTITY: live client-side fetch of any article's attention
+(function(){
+  const input=document.getElementById("q"), out=document.querySelector("#search .result");
+  async function analyze(raw){
+    out.innerHTML="fetching live attention history …";
+    try{
+      const sum=await (await fetch(
+        `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(raw.trim().replaceAll(" ","_"))}`)).json();
+      if(!sum.title||sum.type==="https://mediawiki.org/wiki/HyperSwitch/errors/not_found")
+        {out.innerHTML="no Wikipedia article found for that.";return}
+      const title=sum.title.replaceAll(" ","_");
+      const end=new Date(Date.now()-864e5), start=new Date(Date.now()-181*864e5);
+      const fmt=d=>d.toISOString().slice(0,10).replaceAll("-","");
+      let r=await fetch(`https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/user/${encodeURIComponent(title)}/daily/${fmt(start)}/${fmt(end)}`);
+      if(r.status===404)
+        r=await fetch(`https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/all-agents/${encodeURIComponent(title)}/daily/${fmt(start)}/${fmt(end)}`);
+      if(!r.ok){out.innerHTML="pageviews unavailable for that article.";return}
+      const views=(await r.json()).items.map(x=>x.views);
+      if(views.length<60){out.innerHTML="not enough history (needs ~60 days).";return}
+      // same statistic as the map: log views minus trailing-28d median, z-scored
+      const lg=views.map(v=>Math.log1p(v));
+      const shocks=[];
+      for(let i=28;i<lg.length;i++){
+        const w=[...lg.slice(i-28,i)].sort((a,b)=>a-b);
+        shocks.push(lg[i]-w[14]);
+      }
+      const mean=shocks.reduce((a,b)=>a+b)/shocks.length;
+      const sd=Math.sqrt(shocks.reduce((a,b)=>a+(b-mean)**2,0)/shocks.length)||1;
+      const z=shocks.map(s=>(s-mean)/sd);
+      const now7=z.slice(-7).reduce((a,b)=>a+b)/7;
+      const peak=Math.max(...z.map(Math.abs));
+      const peakIdx=z.findIndex(v=>Math.abs(v)===peak);
+      const peakDate=new Date(start.getTime()+(28+peakIdx)*864e5).toISOString().slice(0,10);
+      const w=250,h=36,mn=Math.min(...z),mxv=Math.max(...z);
+      const pts=z.map((v,i)=>`${i/(z.length-1)*w},${h-(v-mn)/(mxv-mn||1)*h}`).join(" ");
+      out.innerHTML=`<b>${sum.title}</b> — current attention <b style="color:${color(now7)}">${fmtz(now7)}</b>
+        <svg width="${w}" height="${h}"><polyline points="${pts}" fill="none" stroke="${color(now7)}" stroke-width="1.3"/></svg>
+        biggest burst in 6 months: ${fmtz(z[peakIdx])} on ${peakDate}.
+        <span style="color:var(--faint)">not in the trained graphs — neural forecast for custom entities is the next build (ONNX in-browser).</span>`;
+    }catch(e){out.innerHTML="fetch failed — Wikimedia may be rate-limiting; try again in a minute.";}
+  }
+  input.addEventListener("keydown",e=>{if(e.key==="Enter"&&input.value.trim())analyze(input.value)});
+})();
 const bn=document.getElementById("btn-now"),bf=document.getElementById("btn-fc");
 bn.onclick=()=>{mode="now";bn.classList.add("on");bf.classList.remove("on")};
 bf.onclick=()=>{mode="forecast";bf.classList.add("on");bn.classList.remove("on")};
