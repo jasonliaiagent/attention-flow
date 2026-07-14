@@ -6,6 +6,8 @@
 > Watch abnormal attention glow across four economic graphs, updated daily by CI, with the trained GNN's next-week forecast one toggle away. No server, no build — a self-contained page fed by a GitHub Actions cron.
 >
 > **The model grades itself in public**: every week its deployed forecast is scored against what actually happened, and the page shows the running out-of-sample IC (currently ≈ +0.41 over the trailing 12 weeks — consistent with the Phase-2 test IC of 0.49). The full forecast log is auditable in [`docs/track.json`](docs/track.json).
+>
+> Also on the page: a **live wire** (real-time en.wikipedia edits on the tracked entities, via Wikimedia EventStreams — seconds latency), detected attention **events**, the model's ranked **where-the-crowd-goes-next** list with each forecast decomposed into own-history vs graph contribution, and **analyze-any-entity** — type any Wikipedia topic and the trained GNN scores it *in your browser* (ONNX, 40 KB).
 
 [![the attention map](docs/preview.png)](https://jasonliaiagent.github.io/attention-flow/)
 
@@ -187,6 +189,21 @@ No API keys, ~10 minutes on first run (Wikimedia pageviews are free; responses a
 ## Why this design
 
 The research bet is a different **learning objective**. Instead of `loss = (predicted_return − return)²` — the most efficiently arbitraged target on earth — the system learns `P(attention shock at node j, t+k | graph, shocks ≤ t)`: how information spreads through the economy before it becomes price. Attention trajectories are noisier but far less crowded, and they come with free, abundant, self-supervised training data: the internet's own logs.
+
+## Use the data
+
+Two public JSON endpoints, refreshed daily by CI, no key required:
+
+- [`data.json`](https://jasonliaiagent.github.io/attention-flow/data.json) — current attention shocks, GNN forecasts (`forecast`, plus the no-graph `base` for the decomposition), detected events, 30-day spark series per entity
+- [`track.json`](https://jasonliaiagent.github.io/attention-flow/track.json) — the model's complete graded forecast log (the public track record)
+
+```python
+import pandas as pd, requests
+
+d = requests.get("https://jasonliaiagent.github.io/attention-flow/data.json").json()
+ai = pd.DataFrame(d["themes"][0]["nodes"])           # the AI-buildout graph
+print(ai[["id", "now", "forecast", "base"]].sort_values("forecast", ascending=False).head())
+```
 
 ## References
 

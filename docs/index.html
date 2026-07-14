@@ -35,7 +35,12 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;
 .hud{position:fixed;z-index:5}
 #brand{top:26px;left:28px;max-width:340px}
 #rail{top:170px;left:28px;width:305px;display:flex;flex-direction:column;gap:12px;
-  max-height:calc(100vh - 320px);overflow:hidden}
+  max-height:calc(100vh - 320px);overflow-y:auto;scrollbar-width:thin;
+  scrollbar-color:var(--faint) transparent}
+#wire h2 b{color:#7fdc9a}
+#wire h2 b::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;
+  background:#7fdc9a;margin-right:5px;animation:pulse 2s infinite}
+#wire .quiet{color:var(--faint);font-size:10.5px;line-height:1.5}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:3px;
   padding:11px 13px;backdrop-filter:blur(8px)}
 .card h2{font-family:"Chakra Petch",sans-serif;font-size:11px;letter-spacing:.16em;
@@ -137,6 +142,8 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;
 </div>
 
 <div class="hud" id="rail">
+  <div class="card" id="wire"><h2>LIVE WIRE <b>connecting…</b></h2>
+    <div class="body"><div class="quiet">real-time en.wikipedia edits on the 83 tracked entities, via Wikimedia EventStreams</div></div></div>
   <div class="card" id="events"><h2>DETECTED EVENTS <b>· 5 days</b></h2><div class="body"></div></div>
   <div class="card" id="wherenext"><h2>WHERE THE CROWD GOES NEXT <b>· model, +7d</b></h2><div class="body"></div></div>
   <div class="card" id="search">
@@ -408,6 +415,57 @@ function renderWhereNext(){
 }
 renderWhereNext();
 
+// LIVE WIRE: real-time en.wikipedia edits on tracked entities (EventStreams SSE)
+(function(){
+  const hdr=document.querySelector("#wire h2 b"), box=document.querySelector("#wire .body");
+  const byArticle={};
+  data.themes.forEach(t=>t.nodes.forEach(n=>{byArticle[n.article]={theme:t.key,node:n.id}}));
+  let matched=[], stamps=[];
+  function renderWire(){
+    box.innerHTML=matched.length
+      ? matched.map(m=>`<div class="row" data-t="${m.theme}" data-n="${m.node}">
+          <span class="z" style="color:var(--ember)">EDIT</span>
+          <span class="who">${m.node}</span>
+          <span class="sub">${m.time} UTC</span></div>`).join("")
+      : `<div class="quiet">listening — no edits on tracked entities yet this session</div>`;
+    box.querySelectorAll(".row").forEach(r=>r.onclick=()=>focusNode(r.dataset.t,r.dataset.n));
+  }
+  try{
+    const es=new EventSource("https://stream.wikimedia.org/v2/stream/recentchange");
+    es.onopen=()=>{hdr.textContent="listening · 0/min";renderWire()};
+    es.onerror=()=>{hdr.textContent="reconnecting…"};
+    es.onmessage=e=>{
+      if(!e.data.includes('"server_name":"en.wikipedia.org"'))return;
+      let d;try{d=JSON.parse(e.data)}catch(_){return}
+      if(d.type!=="edit")return;
+      const now=Date.now();stamps.push(now);
+      while(stamps.length&&now-stamps[0]>60000)stamps.shift();
+      hdr.textContent=`listening · ${stamps.length}/min`;
+      const hit=byArticle[d.title];
+      if(hit){
+        matched.unshift({...hit,time:new Date(d.timestamp*1000).toISOString().slice(11,19)});
+        matched=matched.slice(0,3);
+        renderWire();
+        if(theme.key===hit.theme){focusId=hit.node;focusUntil=tick+420;}
+      }
+    };
+  }catch(_){document.getElementById("wire").style.display="none"}
+})();
+
+// in-browser neural inference (ONNX) for entities outside the trained graphs
+let ortSession=null;
+async function ensureOrt(){
+  if(ortSession)return ortSession;
+  if(!window.ort){
+    await new Promise((ok,err)=>{const s=document.createElement("script");
+      s.src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1/dist/ort.min.js";
+      s.onload=ok;s.onerror=err;document.head.appendChild(s);});
+    ort.env.wasm.wasmPaths="https://cdn.jsdelivr.net/npm/onnxruntime-web@1/dist/";
+  }
+  ortSession=await ort.InferenceSession.create("model.onnx");
+  return ortSession;
+}
+
 // ANALYZE ANY ENTITY: live client-side fetch of any article's attention
 (function(){
   const input=document.getElementById("q"), out=document.querySelector("#search .result");
@@ -446,7 +504,19 @@ renderWhereNext();
       out.innerHTML=`<b>${sum.title}</b> — current attention <b style="color:${color(now7)}">${fmtz(now7)}</b>
         <svg width="${w}" height="${h}"><polyline points="${pts}" fill="none" stroke="${color(now7)}" stroke-width="1.3"/></svg>
         biggest burst in 6 months: ${fmtz(z[peakIdx])} on ${peakDate}.
-        <span style="color:var(--faint)">not in the trained graphs — neural forecast for custom entities is the next build (ONNX in-browser).</span>`;
+        <span class="neural" style="color:var(--faint)">running the neural net in your browser…</span>`;
+      try{
+        const sess=await ensureOrt();
+        const feed=new Float32Array(z.slice(-90));
+        const res=await sess.run({x:new ort.Tensor("float32",feed,[1,1,90]),
+                                  adj:new ort.Tensor("float32",new Float32Array([1]),[1,1])});
+        const fc=res.forecast.data[0];
+        out.querySelector(".neural").innerHTML=`neural +7d forecast:
+          <b style="color:${color(fc)}">${fmtz(fc)}</b>
+          <span style="color:var(--faint)">— the trained GNN running in your browser (own-history mode: entity outside the trained graphs)</span>`;
+      }catch(err){
+        out.querySelector(".neural").textContent="neural forecast unavailable (onnxruntime failed to load).";
+      }
     }catch(e){out.innerHTML="fetch failed — Wikimedia may be rate-limiting; try again in a minute.";}
   }
   input.addEventListener("keydown",e=>{if(e.key==="Enter"&&input.value.trim())analyze(input.value)});
